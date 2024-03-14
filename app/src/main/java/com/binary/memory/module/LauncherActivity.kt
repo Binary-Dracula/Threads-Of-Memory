@@ -8,8 +8,9 @@ import com.binary.memory.databinding.ActivityLauncherBinding
 
 class LauncherActivity : DraculaActivity<ActivityLauncherBinding>() {
 
-    override val layoutId: Int
-        get() = R.layout.activity_launcher
+    override fun layoutId(): Int {
+        return R.layout.activity_launcher
+    }
 
     override fun initView() {
         super.initView()
@@ -22,7 +23,7 @@ class LauncherActivity : DraculaActivity<ActivityLauncherBinding>() {
                 startActivity(Intent(this@LauncherActivity, MainActivity::class.java))
                 finish()
             }
-        }
+        }.start()
     }
 
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Threads Of Memory</string>
+
+    <string name="add_task">ADD TASK</string>
 </resources>

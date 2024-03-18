@@ -1,5 +1,6 @@
 package com.binary.memory.module.task
 
+import android.view.View
 import androidx.activity.viewModels
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
@@ -21,10 +22,22 @@ class AddTaskActivity : DraculaActivity<ActivityAddTaskBinding>() {
     override fun initView() {
         super.initView()
         initToolbar(viewBinding.toolbar.toolbar, true, R.string.add_task)
+        addClickListener(viewBinding.addTask)
     }
 
     override fun initObserver() {
         super.initObserver()
     }
 
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when (v?.id) {
+            R.id.add_task -> {
+                viewModel.insertTask(
+                    viewBinding.taskTitle.editText?.text?.toString(),
+                    viewBinding.taskDescription.editText?.text?.toString()
+                )
+            }
+        }
+    }
 }

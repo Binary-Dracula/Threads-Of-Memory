@@ -22,9 +22,19 @@ abstract class DraculaFragment<T : ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _view = DataBindingUtil.inflate(layoutInflater, layoutId, container, false)
+        _view = DataBindingUtil.inflate(inflater, layoutId, container, false)
         return view.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initObserver()
+    }
+
+    abstract fun initView()
+
+    abstract fun initObserver()
 
     override fun onDestroyView() {
         super.onDestroyView()

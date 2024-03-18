@@ -1,25 +1,32 @@
 package com.binary.memory.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.binary.memory.base.DraculaViewModel
 import com.binary.memory.model.Task
 import com.binary.memory.repository.TaskRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.binary.memory.utils.DateUtils
 import kotlinx.coroutines.launch
 
 class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel() {
 
 
-    private val _tasks = MutableStateFlow<List<Task>>(emptyList())
-    val tasks: StateFlow<List<Task>>
-        get() = _tasks
+    private val _taskList = MutableLiveData<List<Task>>()
+    val taskList: LiveData<List<Task>> = _taskList
 
-    fun insertTask(task: Task) {
+    fun insertTask(title: String?, content: String?) {
+        if (title.isNullOrEmpty() || content.isNullOrEmpty()) return
         viewModelScope.launch {
-            repository.insertTask(task)
+            repository.insertTask(
+                Task(
+                    title = title,
+                    description = content,
+                    date = DateUtils.getTodayDate()
+                )
+            )
         }
     }
 
@@ -44,7 +51,7 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
     private fun getAllTasks() {
         viewModelScope.launch {
             repository.getAllTasks().collect {
-                _tasks.value = it
+                _taskList.value = it
             }
         }
     }
@@ -52,7 +59,7 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
     fun getTasksByDate(date: String) {
         viewModelScope.launch {
             repository.getTasksByDate(date).collect {
-                _tasks.value = it
+                _taskList.value = it
             }
         }
     }

@@ -2,13 +2,14 @@ package com.binary.memory.base
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class DraculaActivity<T : ViewDataBinding> : AppCompatActivity() {
+abstract class DraculaActivity<T : ViewDataBinding> : AppCompatActivity(), View.OnClickListener {
 
     abstract fun layoutId(): Int
 
@@ -43,6 +44,16 @@ abstract class DraculaActivity<T : ViewDataBinding> : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun addClickListener(vararg view: View) {
+        for (v in view) {
+            v.setOnClickListener(this)
+        }
+    }
+
+    override fun onClick(v: View?) {
+
     }
 
 }

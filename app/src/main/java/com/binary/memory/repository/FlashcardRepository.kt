@@ -14,6 +14,18 @@ class FlashcardRepository(private val flashcardDao: FlashcardDao) {
         }
     }
 
+    suspend fun deleteFlashcard(flashcard: Flashcard) {
+        withContext(Dispatchers.IO) {
+            flashcardDao.deleteFlashcard(flashcard)
+        }
+    }
+
+    suspend fun updateFlashcard(flashcard: Flashcard) {
+        withContext(Dispatchers.IO) {
+            flashcardDao.updateFlashcard(flashcard)
+        }
+    }
+
     suspend fun getAllFlashcards(): Flow<List<Flashcard>> {
         return withContext(Dispatchers.IO) {
             flashcardDao.getAllFlashcards()
@@ -26,15 +38,4 @@ class FlashcardRepository(private val flashcardDao: FlashcardDao) {
         }
     }
 
-    suspend fun updateFlashcard(flashcard: Flashcard) {
-        withContext(Dispatchers.IO) {
-            flashcardDao.updateFlashcard(flashcard)
-        }
-    }
-
-    suspend fun deleteFlashcard(flashcard: Flashcard) {
-        withContext(Dispatchers.IO) {
-            flashcardDao.deleteFlashcard(flashcard)
-        }
-    }
 }

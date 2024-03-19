@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel() {
 
+    private val _task = MutableLiveData<Task>()
+    val task: LiveData<Task> = _task
 
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> = _taskList
@@ -45,6 +47,14 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
     fun updateTask(task: Task) {
         viewModelScope.launch {
             repository.updateTask(task)
+        }
+    }
+
+    fun getTaskById(id: Int) {
+        viewModelScope.launch {
+            repository.getTaskById(id)?.collect {
+                _task.value = it
+            }
         }
     }
 

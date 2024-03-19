@@ -30,11 +30,16 @@ abstract class DraculaFragment<T : ViewDataBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initObserver()
+        initData()
     }
 
     abstract fun initView()
 
     abstract fun initObserver()
+
+    open fun initData() {
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

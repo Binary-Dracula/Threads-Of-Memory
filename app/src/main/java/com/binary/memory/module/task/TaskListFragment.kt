@@ -15,9 +15,9 @@ class TaskListFragment : DraculaFragment<FragmentTaskListBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_task_list
 
-    // 声明ViewModel
     private val viewModel by viewModels<TaskViewModel> {
-        TaskViewModelFactory((context as DraculaApplication).taskRepository)
+        val application = requireActivity().application as DraculaApplication
+        TaskViewModelFactory(application.taskRepository)
     }
 
     // 声明TaskListAdapter
@@ -34,6 +34,10 @@ class TaskListFragment : DraculaFragment<FragmentTaskListBinding>() {
         viewModel.taskList.observe(viewLifecycleOwner) {
             adapter.updateTasks(it)
         }
+    }
+
+    override fun initData() {
+        viewModel.getAllTasks()
     }
 
     companion object {

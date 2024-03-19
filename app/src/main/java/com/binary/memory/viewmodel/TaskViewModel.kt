@@ -48,7 +48,7 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
         }
     }
 
-    private fun getAllTasks() {
+    fun getAllTasks() {
         viewModelScope.launch {
             repository.getAllTasks().collect {
                 _taskList.value = it

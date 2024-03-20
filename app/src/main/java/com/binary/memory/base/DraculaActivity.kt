@@ -22,6 +22,16 @@ abstract class DraculaActivity<T : ViewDataBinding> : AppCompatActivity(), View.
 
         initView()
         initObserver()
+        initData()
+    }
+
+    inline fun <reified E> getExtra(key: String, onResult: (E?) -> Unit) {
+        val value = intent?.extras?.get(key)
+        if (value is E) {
+            onResult(value)
+        } else {
+            onResult(null)
+        }
     }
 
     open fun initView() {}
@@ -35,6 +45,8 @@ abstract class DraculaActivity<T : ViewDataBinding> : AppCompatActivity(), View.
     }
 
     open fun initObserver() {}
+
+    open fun initData() {}
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

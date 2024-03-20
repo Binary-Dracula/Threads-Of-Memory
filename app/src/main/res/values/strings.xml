@@ -2,6 +2,5 @@
     <string name="app_name">Threads Of Memory</string>
 
     <string name="add_task">ADD TASK</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="task_detail">TASK DETAIL</string>
 </resources>

@@ -19,6 +19,9 @@
             android:name=".module.task.AddTaskActivity"
             android:exported="false" />
         <activity
+            android:name=".module.task.TaskDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".module.LauncherActivity"
             android:exported="true">
             <intent-filter>

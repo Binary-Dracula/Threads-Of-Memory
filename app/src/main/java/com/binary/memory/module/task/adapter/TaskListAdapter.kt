@@ -11,6 +11,8 @@ import com.binary.memory.model.Task
 class TaskListAdapter(private val tasks: MutableList<Task>) :
     RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
 
+    var onItemClickListener: ((Task) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ListItemTaskBinding>(
@@ -36,9 +38,14 @@ class TaskListAdapter(private val tasks: MutableList<Task>) :
         notifyItemChanged(0, newTasks.size)
     }
 
-    class TaskViewHolder(private val binding: ListItemTaskBinding) :
+    inner class TaskViewHolder(private val binding: ListItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task) {
+            binding.root.tag = task
+            // click
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(it.tag as Task)
+            }
             binding.task = task
             binding.executePendingBindings()
         }

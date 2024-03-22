@@ -49,8 +49,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|top"
-                android:lines="10" />
+                android:lines="5" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.binary.memory.widgets.PriorityGroup
+            android:id="@+id/priority_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="@+id/task_title"
+            app:layout_constraintStart_toStartOf="@+id/task_title"
+            app:layout_constraintTop_toBottomOf="@+id/task_description" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_task"

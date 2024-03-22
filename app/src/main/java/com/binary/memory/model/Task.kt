@@ -21,5 +21,7 @@ data class Task(
     // 提醒时间
     var time: String = "",
     // 是否完成
-    var isDone: Boolean = false
+    var isDone: Boolean = false,
+    // 优先级
+    var priority: Int = 0
 )

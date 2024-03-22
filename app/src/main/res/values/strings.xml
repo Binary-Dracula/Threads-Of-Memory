@@ -3,4 +3,7 @@
 
     <string name="add_task">ADD TASK</string>
     <string name="task_detail">TASK DETAIL</string>
+    <string name="low">LOW</string>
+    <string name="high">HIGH</string>
+    <string name="medium">MEDIUM</string>
 </resources>

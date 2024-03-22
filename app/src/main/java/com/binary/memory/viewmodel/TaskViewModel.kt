@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.binary.memory.base.DraculaViewModel
+import com.binary.memory.constants.Constants
 import com.binary.memory.model.Task
 import com.binary.memory.repository.TaskRepository
 import com.binary.memory.utils.DateUtils
@@ -19,6 +20,13 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> = _taskList
 
+    private var priority = Constants.Priority.LOW
+
+    fun setPriority(priority: Constants.Priority) {
+        this.priority = priority
+    }
+
+
     fun insertTask(title: String?, content: String?) {
         if (title.isNullOrEmpty() || content.isNullOrEmpty()) return
         viewModelScope.launch {
@@ -26,7 +34,8 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
                 Task(
                     title = title,
                     description = content,
-                    date = DateUtils.getTodayDate()
+                    date = DateUtils.getTodayDate(),
+                    priority = priority.getOrdinal()
                 )
             )
         }

@@ -20,8 +20,8 @@ data class Task(
     var date: String = "",
     // 提醒时间
     var time: String = "",
-    // 是否完成
-    var isDone: Boolean = false,
     // 优先级
-    var priority: Int = 0
+    var priority: Int = 0,
+    // 是否完成
+    var isDone: Boolean = false
 )

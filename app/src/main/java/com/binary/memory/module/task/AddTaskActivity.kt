@@ -35,10 +35,21 @@ class AddTaskActivity : DraculaActivity<ActivityAddTaskBinding>() {
         viewBinding.priorityGroup.setOnPriorityClickListener { priority ->
             viewModel.setPriority(priority)
         }
+        viewBinding.dateTimeGroup.onDateSelectedListener = { date ->
+            viewModel.setNotifyDate(date)
+        }
+        viewBinding.dateTimeGroup.onTimeSelectedListener = { time ->
+            viewModel.setNotifyTime(time)
+        }
     }
 
     override fun initObserver() {
         super.initObserver()
+        viewModel.done.observe(this) {
+            if (it) {
+                finish()
+            }
+        }
     }
 
     override fun onClick(v: View?) {

@@ -40,7 +40,8 @@ class TaskListFragment : DraculaFragment<FragmentTaskListBinding>() {
         }
     }
 
-    override fun initData() {
+    override fun onResume() {
+        super.onResume()
         viewModel.getAllTasks()
     }
 

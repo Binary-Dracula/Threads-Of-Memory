@@ -2,6 +2,7 @@
     <string name="app_name">Threads Of Memory</string>
 
     <string name="add_task">ADD TASK</string>
+    <string name="delete_task">DELETE TASK</string>
     <string name="task_detail">TASK DETAIL</string>
     <string name="low">LOW</string>
     <string name="high">HIGH</string>

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.binary.memory.R
+import com.binary.memory.constants.Constants
 import com.binary.memory.databinding.ListItemTaskBinding
 import com.binary.memory.model.Task
 
@@ -33,9 +34,13 @@ class TaskListAdapter(private val tasks: MutableList<Task>) :
     }
 
     fun updateTasks(newTasks: List<Task>) {
+        val size = tasks.size
         tasks.clear()
-        tasks.addAll(newTasks)
-        notifyItemChanged(0, newTasks.size)
+        notifyItemRangeRemoved(0, size)
+        if (newTasks.isNotEmpty()) {
+            tasks.addAll(newTasks)
+            notifyItemRangeChanged(0, newTasks.size)
+        }
     }
 
     inner class TaskViewHolder(private val binding: ListItemTaskBinding) :
@@ -46,6 +51,7 @@ class TaskListAdapter(private val tasks: MutableList<Task>) :
             binding.root.setOnClickListener {
                 onItemClickListener?.invoke(it.tag as Task)
             }
+            binding.priority.text = Constants.getPriorityString(binding.root.context, task.priority)
             binding.task = task
             binding.executePendingBindings()
         }

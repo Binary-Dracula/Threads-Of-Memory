@@ -94,7 +94,7 @@ class PriorityGroup @JvmOverloads constructor(
                 } else {
                     binding.root.setBackgroundResource(0)
                 }
-                binding.priority.text = priority.name
+                binding.priority.text = priority.getPriorityString(context)
                 binding.root.tag = Pair(priority, position)
             }
         }

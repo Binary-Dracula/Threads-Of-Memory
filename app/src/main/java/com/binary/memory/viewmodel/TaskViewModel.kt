@@ -15,17 +15,29 @@ import kotlinx.coroutines.launch
 class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel() {
 
     private val _task = MutableLiveData<Task>()
-    val task: LiveData<Task> = _task
+    val task: LiveData<Task?> = _task
 
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> = _taskList
 
     private var priority = Constants.Priority.LOW
 
+    private var notifyDate = ""
+    private var notifyTime = ""
+
+    val done = MutableLiveData<Boolean>()
+
     fun setPriority(priority: Constants.Priority) {
         this.priority = priority
     }
 
+    fun setNotifyDate(date: String) {
+        notifyDate = date
+    }
+
+    fun setNotifyTime(time: String) {
+        notifyTime = time
+    }
 
     fun insertTask(title: String?, content: String?) {
         if (title.isNullOrEmpty() || content.isNullOrEmpty()) return
@@ -34,16 +46,23 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
                 Task(
                     title = title,
                     description = content,
-                    date = DateUtils.getTodayDate(),
-                    priority = priority.getOrdinal()
+                    createDate = DateUtils.getTodayDate(),
+                    date = notifyDate,
+                    time = notifyTime,
+                    priority = priority.getOrdinal(),
+                    isDone = false,
                 )
             )
+            done.value = true
         }
     }
 
-    fun deleteTask(task: Task) {
+    fun deleteTask() {
         viewModelScope.launch {
-            repository.deleteTask(task)
+            if (_task.value != null) {
+                repository.deleteTask(_task.value!!)
+            }
+            done.value = true
         }
     }
 

@@ -24,4 +24,15 @@ object Constants {
             }
         }
     }
+
+    fun getPriorityString(context: Context, index: Int): String {
+        return when (index) {
+            0 -> context.getString(R.string.low)
+            1 -> context.getString(R.string.medium)
+            2 -> context.getString(R.string.high)
+            else -> {
+                context.getString(R.string.low)
+            }
+        }
+    }
 }

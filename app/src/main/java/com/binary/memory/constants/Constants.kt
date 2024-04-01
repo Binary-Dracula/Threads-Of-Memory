@@ -5,6 +5,18 @@ import com.binary.memory.R
 
 object Constants {
 
+    const val CHANNEL_ID = "alarm_channel_id"
+    const val NOTIFICATION_ID = 1000
+
+    const val PERMISSION_REQUEST_CODE = 2000
+
+    val PERMISSIONS = listOf(
+        android.Manifest.permission.SET_ALARM,
+        android.Manifest.permission.WAKE_LOCK,
+        android.Manifest.permission.SYSTEM_ALERT_WINDOW,
+        android.Manifest.permission.SCHEDULE_EXACT_ALARM
+    )
+
     enum class Priority {
         LOW, MEDIUM, HIGH;
 

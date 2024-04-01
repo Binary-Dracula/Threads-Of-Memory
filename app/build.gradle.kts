@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.easypermissions.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

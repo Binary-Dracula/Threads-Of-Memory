@@ -9,6 +9,7 @@ import com.binary.memory.base.DraculaViewModel
 import com.binary.memory.constants.Constants
 import com.binary.memory.model.Task
 import com.binary.memory.repository.TaskRepository
+import com.binary.memory.utils.AlarmUtils
 import com.binary.memory.utils.DateUtils
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,8 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
     private var notifyTime = ""
 
     val done = MutableLiveData<Boolean>()
+
+    private val alarmUtils = AlarmUtils()
 
     fun setPriority(priority: Constants.Priority) {
         this.priority = priority

@@ -43,19 +43,33 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
     }
 
     fun insertTask(title: String?, content: String?) {
-        if (title.isNullOrEmpty() || content.isNullOrEmpty()) return
+        if (title.isNullOrEmpty()) {
+            return
+        }
+        if (content.isNullOrEmpty()) {
+            return
+        }
+        if (notifyDate.isEmpty()) {
+            return
+        }
+        if (notifyTime.isEmpty()) {
+            return
+        }
+
+        val task = Task(
+            title = title,
+            description = content,
+            createDate = DateUtils.getTodayDate(),
+            date = notifyDate,
+            time = notifyTime,
+            priority = priority.getOrdinal(),
+            isDone = false,
+        )
+
+        alarmUtils.setAlarm(DateUtils.getTriggerTimeMillis(notifyDate, notifyTime), task)
+
         viewModelScope.launch {
-            repository.insertTask(
-                Task(
-                    title = title,
-                    description = content,
-                    createDate = DateUtils.getTodayDate(),
-                    date = notifyDate,
-                    time = notifyTime,
-                    priority = priority.getOrdinal(),
-                    isDone = false,
-                )
-            )
+            repository.insertTask(task)
             done.value = true
         }
     }

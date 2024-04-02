@@ -1,6 +1,8 @@
 package com.binary.memory.constants
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.binary.memory.R
 
 object Constants {
@@ -8,13 +10,11 @@ object Constants {
     const val CHANNEL_ID = "alarm_channel_id"
     const val NOTIFICATION_ID = 1000
 
-    const val PERMISSION_REQUEST_CODE = 2000
+    const val PERMISSION_NOTIFICATION_REQUEST_CODE = 2000
 
-    val PERMISSIONS = listOf(
-        android.Manifest.permission.SET_ALARM,
-        android.Manifest.permission.WAKE_LOCK,
-        android.Manifest.permission.SYSTEM_ALERT_WINDOW,
-        android.Manifest.permission.SCHEDULE_EXACT_ALARM
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    val PERMISSION_NOTIFICATION = arrayOf(
+        android.Manifest.permission.POST_NOTIFICATIONS
     )
 
     enum class Priority {

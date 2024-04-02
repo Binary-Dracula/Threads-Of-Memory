@@ -46,7 +46,7 @@ class DateTimeGroup @JvmOverloads constructor(
                 { _, selectedYear, selectedMonth, selectedDayOfMonth ->
                     val monthStr = String.format("%02d", selectedMonth + 1)
                     val dayOfMonthStr = String.format("%02d", selectedDayOfMonth)
-                    val selectedDate = "$selectedYear/$monthStr/$dayOfMonthStr"
+                    val selectedDate = "$selectedYear-$monthStr-$dayOfMonthStr"
                     binding.dateText.text = selectedDate
                     onDateSelectedListener?.invoke(selectedDate)
                 },

@@ -12,6 +12,15 @@ import kotlinx.coroutines.SupervisorJob
 
 class DraculaApplication : Application() {
 
+    companion object {
+        private lateinit var instance: DraculaApplication
+
+        // 提供一个静态方法来获取全局的 Context
+        fun getAppContext(): Context {
+            return instance.applicationContext
+        }
+    }
+
     val applicationScope = CoroutineScope(SupervisorJob())
 
     val database by lazy {
@@ -23,6 +32,9 @@ class DraculaApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
+
+        createNotificationChannel()
     }
 
     private fun createNotificationChannel() {
@@ -35,6 +47,7 @@ class DraculaApplication : Application() {
         // Register the channel with the system
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
 }

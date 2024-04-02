@@ -1,11 +1,14 @@
 package com.binary.memory.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 /**
  * 任务
  */
+@Parcelize
 @Entity(tableName = "task_table")
 data class Task(
     // 任务ID
@@ -24,4 +27,4 @@ data class Task(
     var priority: Int = 0,
     // 是否完成
     var isDone: Boolean = false
-)
+) : Parcelable

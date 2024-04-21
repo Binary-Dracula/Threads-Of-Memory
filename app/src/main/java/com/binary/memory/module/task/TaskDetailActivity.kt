@@ -8,15 +8,15 @@ import androidx.activity.viewModels
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.base.DraculaApplication
-import com.binary.memory.constants.Constants
 import com.binary.memory.databinding.ActivityTaskDetailBinding
+import com.binary.memory.entity.DifficultyLevel
 import com.binary.memory.viewmodel.TaskViewModel
 import com.binary.memory.viewmodel.TaskViewModelFactory
 
 class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
 
     private val viewModel by viewModels<TaskViewModel> {
-        TaskViewModelFactory((application as DraculaApplication).taskRepository)
+        TaskViewModelFactory(application, (application as DraculaApplication).taskRepository)
     }
 
     override fun layoutId(): Int {
@@ -25,6 +25,11 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
 
     override fun initView() {
         initToolbar(viewBinding.toolbar.toolbar, true, R.string.task_detail)
+
+        viewBinding.difficultyLevel.setOptionList(viewModel.difficultyLevelList)
+        viewBinding.difficultyLevel.setOnItemClickListener(::onDifficultyLevelSelected)
+
+        viewBinding.complete.setOnClickListener(this)
         viewBinding.deleteTask.setOnClickListener(this)
     }
 
@@ -32,7 +37,9 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
         viewModel.task.observe(this) {
             if (it == null) return@observe
             viewBinding.task = it
-            viewBinding.priority.text = Constants.getPriorityString(this, it.priority)
+        }
+        viewModel.complete.observe(this) {
+
         }
         viewModel.done.observe(this) {
             if (it) {
@@ -52,10 +59,18 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v?.id) {
+            R.id.complete -> {
+                viewModel.completeTask()
+            }
+
             R.id.delete_task -> {
                 viewModel.deleteTask()
             }
         }
+    }
+
+    private fun onDifficultyLevelSelected(difficultyLevel: DifficultyLevel) {
+        viewModel.setDifficultyLevel(difficultyLevel)
     }
 
     companion object {

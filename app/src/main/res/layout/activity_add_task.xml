@@ -52,7 +52,7 @@
                 android:lines="5" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.binary.memory.widgets.PriorityGroup
+        <com.binary.memory.widgets.ViewOptionGroup
             android:id="@+id/priority_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

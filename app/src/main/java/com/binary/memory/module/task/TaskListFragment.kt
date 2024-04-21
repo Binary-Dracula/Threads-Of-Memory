@@ -17,7 +17,7 @@ class TaskListFragment : DraculaFragment<FragmentTaskListBinding>() {
 
     private val viewModel by viewModels<TaskViewModel> {
         val application = requireActivity().application as DraculaApplication
-        TaskViewModelFactory(application.taskRepository)
+        TaskViewModelFactory(application, application.taskRepository)
     }
 
     // 声明TaskListAdapter

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.binary.memory.R
-import com.binary.memory.constants.Constants
 import com.binary.memory.databinding.ListItemTaskBinding
 import com.binary.memory.model.Task
 
@@ -51,7 +50,7 @@ class TaskListAdapter(private val tasks: MutableList<Task>) :
             binding.root.setOnClickListener {
                 onItemClickListener?.invoke(it.tag as Task)
             }
-            binding.priority.text = Constants.getPriorityString(binding.root.context, task.priority)
+            binding.priority.text = task.priorityString
             binding.task = task
             binding.executePendingBindings()
         }

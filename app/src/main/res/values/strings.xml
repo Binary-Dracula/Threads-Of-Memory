@@ -3,10 +3,22 @@
 
     <string name="add_task">ADD TASK</string>
     <string name="delete_task">DELETE TASK</string>
+    <string name="Complete">COMPLETE</string>
     <string name="task_detail">TASK DETAIL</string>
-    <string name="low">LOW</string>
-    <string name="high">HIGH</string>
-    <string name="medium">MEDIUM</string>
+
+
+    <string-array name="priority">
+        <item>LOW</item>
+        <item>MEDIUM</item>
+        <item>HIGH</item>
+    </string-array>
+
+    <string-array name="difficulty_level">
+        <item>HARD</item>
+        <item>GOOD</item>
+        <item>EASY</item>
+    </string-array>
+
     <string name="permission_rationale">精准闹钟理由</string>
     <string name="default_notification_content">Harry Up~</string>
 </resources>

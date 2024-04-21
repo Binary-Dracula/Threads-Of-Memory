@@ -5,10 +5,10 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/priority"
+        android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Priority"
+        android:text="RESTART"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="?attr/colorAccent"
         android:textSize="20sp"

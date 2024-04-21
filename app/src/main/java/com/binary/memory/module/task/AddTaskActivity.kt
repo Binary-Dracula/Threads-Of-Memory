@@ -8,6 +8,7 @@ import com.binary.memory.base.DraculaActivity
 import com.binary.memory.base.DraculaApplication
 import com.binary.memory.constants.Constants
 import com.binary.memory.databinding.ActivityAddTaskBinding
+import com.binary.memory.entity.Priority
 import com.binary.memory.viewmodel.TaskViewModel
 import com.binary.memory.viewmodel.TaskViewModelFactory
 import com.vmadalin.easypermissions.EasyPermissions
@@ -15,7 +16,7 @@ import com.vmadalin.easypermissions.EasyPermissions
 class AddTaskActivity : DraculaActivity<ActivityAddTaskBinding>() {
 
     private val viewModel by viewModels<TaskViewModel> {
-        TaskViewModelFactory((application as DraculaApplication).taskRepository)
+        TaskViewModelFactory(application, (application as DraculaApplication).taskRepository)
     }
 
     override fun layoutId(): Int {
@@ -27,16 +28,11 @@ class AddTaskActivity : DraculaActivity<ActivityAddTaskBinding>() {
         initToolbar(viewBinding.toolbar.toolbar, true, R.string.add_task)
         addClickListener(viewBinding.addTask)
 
-        viewBinding.priorityGroup.setPriority(
-            listOf(
-                Constants.Priority.LOW,
-                Constants.Priority.MEDIUM,
-                Constants.Priority.HIGH
-            )
-        )
-        viewBinding.priorityGroup.setOnPriorityClickListener { priority ->
-            viewModel.setPriority(priority)
+        viewBinding.priorityGroup.setOptionList(viewModel.priorityList)
+        viewBinding.priorityGroup.setOnItemClickListener { priority ->
+            viewModel.setPriority(priority as Priority)
         }
+
         viewBinding.dateTimeGroup.onDateSelectedListener = { date ->
             viewModel.setNotifyDate(date)
         }

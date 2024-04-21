@@ -1,19 +1,25 @@
 package com.binary.memory.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.binary.memory.R
 import com.binary.memory.base.DraculaViewModel
-import com.binary.memory.constants.Constants
+import com.binary.memory.entity.DifficultyLevel
+import com.binary.memory.entity.Priority
 import com.binary.memory.model.Task
 import com.binary.memory.repository.TaskRepository
 import com.binary.memory.utils.AlarmUtils
 import com.binary.memory.utils.DateUtils
 import kotlinx.coroutines.launch
 
-class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel() {
+class TaskViewModel(
+    application: Application,
+    private val repository: TaskRepository
+) : DraculaViewModel(application) {
 
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task?> = _task
@@ -21,17 +27,35 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
     private val _taskList = MutableLiveData<List<Task>>()
     val taskList: LiveData<List<Task>> = _taskList
 
-    private var priority = Constants.Priority.LOW
+    val priorityList: ArrayList<Priority> = ArrayList()
+    private var priority: Priority? = null
+
+    val difficultyLevelList: ArrayList<DifficultyLevel> = ArrayList()
+    private var difficultyLevel: DifficultyLevel? = null
 
     private var notifyDate = ""
     private var notifyTime = ""
 
     val done = MutableLiveData<Boolean>()
+    val complete = MutableLiveData<Boolean>()
 
     private val alarmUtils = AlarmUtils()
 
-    fun setPriority(priority: Constants.Priority) {
+    init {
+        application.resources.getStringArray(R.array.priority).forEachIndexed { index, s ->
+            priorityList.add(Priority(index, s))
+        }
+        application.resources.getStringArray(R.array.difficulty_level).forEachIndexed { index, s ->
+            difficultyLevelList.add(DifficultyLevel(index, s))
+        }
+    }
+
+    fun setPriority(priority: Priority) {
         this.priority = priority
+    }
+
+    fun setDifficultyLevel(difficultyLevel: DifficultyLevel) {
+        this.difficultyLevel = difficultyLevel
     }
 
     fun setNotifyDate(date: String) {
@@ -62,7 +86,8 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
             createDate = DateUtils.getTodayDate(),
             date = notifyDate,
             time = notifyTime,
-            priority = priority.getOrdinal(),
+            priority = priority?.getOptionIndex() ?: 0,
+            priorityString = priority?.getOptionString() ?: "",
             isDone = false,
         )
 
@@ -71,6 +96,16 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
         viewModelScope.launch {
             repository.insertTask(task)
             done.value = true
+        }
+    }
+
+    fun completeTask() {
+        viewModelScope.launch {
+            if (_task.value != null) {
+                _task.value!!.isDone = true
+                repository.updateTask(_task.value!!)
+            }
+            complete.value = true
         }
     }
 
@@ -121,11 +156,14 @@ class TaskViewModel(private val repository: TaskRepository) : DraculaViewModel()
 
 }
 
-class TaskViewModelFactory(private val repository: TaskRepository) : ViewModelProvider.Factory {
+class TaskViewModelFactory(
+    private val application: Application,
+    private val repository: TaskRepository
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return TaskViewModel(repository) as T
+            return TaskViewModel(application, repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

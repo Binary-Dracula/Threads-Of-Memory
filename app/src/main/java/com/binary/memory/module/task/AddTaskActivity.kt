@@ -28,8 +28,7 @@ class AddTaskActivity : DraculaActivity<ActivityAddTaskBinding>() {
         initToolbar(viewBinding.toolbar.toolbar, true, R.string.add_task)
         addClickListener(viewBinding.addTask)
 
-        viewBinding.priorityGroup.setOptionList(viewModel.priorityList)
-        viewBinding.priorityGroup.setOnItemClickListener { priority ->
+        viewBinding.priorityGroup.init(viewModel.priorityList) { priority ->
             viewModel.setPriority(priority as Priority)
         }
 

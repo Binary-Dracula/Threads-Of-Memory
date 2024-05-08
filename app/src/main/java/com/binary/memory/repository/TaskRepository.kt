@@ -24,7 +24,7 @@ class TaskRepository(private val taskDao: TaskDao) : DraculaRepository {
     }
 
     fun getTaskById(id: Int): Flow<Task>? {
-        return taskDao.getTask(id)
+        return taskDao.getTaskById(id)
     }
 
     fun getAllTasks(): Flow<List<Task>> {

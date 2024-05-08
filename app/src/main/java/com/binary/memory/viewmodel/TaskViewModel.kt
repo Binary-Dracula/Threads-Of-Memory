@@ -102,7 +102,16 @@ class TaskViewModel(
     fun completeTask() {
         viewModelScope.launch {
             if (_task.value != null) {
-                _task.value!!.isDone = true
+                // 计算提醒时间并更新
+                val nextDate = DateUtils.getNextRemindDateByDifficultyLevel(difficultyLevel)
+                val nextTime = DateUtils.get20ClockMillis()
+                val triggerTime = nextDate + nextTime
+                // 更新任务数据
+                _task.value!!.date = DateUtils.dateTimestampToString(triggerTime)
+                _task.value!!.time = DateUtils.timeTimestampToString(triggerTime)
+                // 设定提醒
+                alarmUtils.setAlarm(triggerTime, _task.value!!)
+                // 更新表
                 repository.updateTask(_task.value!!)
             }
             complete.value = true

@@ -26,8 +26,7 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
     override fun initView() {
         initToolbar(viewBinding.toolbar.toolbar, true, R.string.task_detail)
 
-        viewBinding.difficultyLevel.setOptionList(viewModel.difficultyLevelList)
-        viewBinding.difficultyLevel.setOnItemClickListener(::onDifficultyLevelSelected)
+        viewBinding.difficultyLevel.init(viewModel.difficultyLevelList, ::onDifficultyLevelSelected)
 
         viewBinding.complete.setOnClickListener(this)
         viewBinding.deleteTask.setOnClickListener(this)

@@ -25,6 +25,7 @@ data class Task(
     var time: String = "",
     // 优先级
     var priority: Int = 0,
+    // 优先级字符串
     var priorityString: String = "",
     // 是否完成
     var isDone: Boolean = false

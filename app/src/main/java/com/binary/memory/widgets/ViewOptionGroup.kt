@@ -37,12 +37,11 @@ class ViewOptionGroup<T : ViewOptionGroup.IOption> @JvmOverloads constructor(
         selectedColor = color
     }
 
-    fun setOnItemClickListener(listener: (T) -> Unit) {
-        adapter.setOnItemClickListener(listener)
-    }
-
-    fun setOptionList(optionList: List<T>) {
+    fun init(optionList: List<T>, listener: (T) -> Unit) {
+        if (optionList.isEmpty()) return
         adapter.setOptionList(optionList)
+        adapter.setOnItemClickListener(listener)
+        listener.invoke(optionList[0])
     }
 
     private inner class OptionGroupAdapter<T : IOption> :

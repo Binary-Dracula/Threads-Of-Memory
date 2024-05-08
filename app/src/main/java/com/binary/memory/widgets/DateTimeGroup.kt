@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.binary.memory.R
 import com.binary.memory.databinding.DateTimeGroupBinding
+import java.util.Locale
 
 class DateTimeGroup @JvmOverloads constructor(
     context: Context,
@@ -17,18 +18,17 @@ class DateTimeGroup @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private var binding: DateTimeGroupBinding
+    private var binding: DateTimeGroupBinding = DataBindingUtil.inflate(
+        LayoutInflater.from(context),
+        R.layout.date_time_group,
+        this,
+        true
+    )
 
     var onDateSelectedListener: ((date: String) -> Unit)? = null
     var onTimeSelectedListener: ((time: String) -> Unit)? = null
 
     init {
-        binding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.date_time_group,
-            this,
-            true
-        )
 
         setupDateButton()
         setupTimeButton()
@@ -44,8 +44,10 @@ class DateTimeGroup @JvmOverloads constructor(
             val datePickerDialog = DatePickerDialog(
                 context,
                 { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                    val monthStr = String.format("%02d", selectedMonth + 1)
-                    val dayOfMonthStr = String.format("%02d", selectedDayOfMonth)
+                    val monthStr =
+                        String.format(Locale.getDefault(), "%02d", selectedMonth + 1)
+                    val dayOfMonthStr =
+                        String.format(Locale.getDefault(), "%02d", selectedDayOfMonth)
                     val selectedDate = "$selectedYear-$monthStr-$dayOfMonthStr"
                     binding.dateText.text = selectedDate
                     onDateSelectedListener?.invoke(selectedDate)
@@ -65,8 +67,8 @@ class DateTimeGroup @JvmOverloads constructor(
             val timePickerDialog = TimePickerDialog(
                 context,
                 { _, selectedHour, selectedMinute ->
-                    val hourStr = String.format("%02d", selectedHour)
-                    val minuteStr = String.format("%02d", selectedMinute)
+                    val hourStr = String.format(Locale.getDefault(), "%02d", selectedHour)
+                    val minuteStr = String.format(Locale.getDefault(), "%02d", selectedMinute)
                     val selectedTime = "$hourStr:$minuteStr"
                     binding.timeText.text = selectedTime
                     onTimeSelectedListener?.invoke(selectedTime)

@@ -16,6 +16,9 @@ interface TaskDao {
     @Delete
     suspend fun delete(task: Task)
 
+    @Query("DELETE FROM task_table WHERE id = :id")
+    suspend fun deleteTaskById(id: Int)
+
     @Query("DELETE FROM task_table")
     suspend fun deleteAll()
 
@@ -23,7 +26,7 @@ interface TaskDao {
     suspend fun update(task: Task)
 
     @Query("SELECT * FROM task_table WHERE id = :id")
-    fun getTask(id: Int): Flow<Task>?
+    fun getTaskById(id: Int): Flow<Task>?
 
     @Query("SELECT * FROM task_table")
     fun getAllTasks(): Flow<List<Task>>

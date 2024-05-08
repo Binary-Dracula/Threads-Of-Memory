@@ -9,7 +9,13 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "flashcards")
 data class Flashcard(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val front: String, // 正面内容
-    val back: String // 背面内容
+    // 正面内容
+    val front: String,
+    // 背面内容
+    val back: String,
+    // 创建时间
+    val createdTime: Long,
+    // 提醒时间
+    val remindTime: Long
 )
 

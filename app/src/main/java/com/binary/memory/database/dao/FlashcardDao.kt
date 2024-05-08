@@ -16,6 +16,9 @@ interface FlashcardDao {
     @Delete
     suspend fun deleteFlashcard(flashcard: Flashcard)
 
+    @Query("DELETE FROM flashcards")
+    suspend fun deleteAllFlashcards()
+
     @Update
     suspend fun updateFlashcard(flashcard: Flashcard)
 

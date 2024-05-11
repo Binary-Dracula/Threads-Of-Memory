@@ -38,7 +38,7 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
             viewBinding.task = it
         }
         viewModel.complete.observe(this) {
-
+            if (it) finish()
         }
         viewModel.done.observe(this) {
             if (it) {

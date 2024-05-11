@@ -5,7 +5,9 @@
     <string name="delete_task">DELETE TASK</string>
     <string name="Complete">COMPLETE</string>
     <string name="task_detail">TASK DETAIL</string>
-
+    <string name="remind_date">Remind Date</string>
+    <string name="remind_time">Remind Time</string>
+    <string name="next_remind">Next Remind</string>
 
     <string-array name="priority">
         <item>LOW</item>

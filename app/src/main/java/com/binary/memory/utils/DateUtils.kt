@@ -72,7 +72,11 @@ object DateUtils {
     fun dateTimestampToString(timestamp: Long): String {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = timestamp
-        return "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.DAY_OF_MONTH)}"
+        return "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH) + 1}-${
+            calendar.get(
+                Calendar.DAY_OF_MONTH
+            )
+        }"
     }
 
     fun timeTimestampToString(timestamp: Long): String {
@@ -100,6 +104,10 @@ object DateUtils {
      */
     fun get20ClockMillis(): Long {
         return 60 * 60 * 20 * 1000L
+    }
+
+    fun getTimestampAfter5Minutes():Long{
+        return System.currentTimeMillis() + 5 * 60 * 1000
     }
 
 }

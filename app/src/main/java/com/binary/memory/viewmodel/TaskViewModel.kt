@@ -105,7 +105,11 @@ class TaskViewModel(
                 // 计算提醒时间并更新
                 val nextDate = DateUtils.getNextRemindDateByDifficultyLevel(difficultyLevel)
                 val nextTime = DateUtils.get20ClockMillis()
-                val triggerTime = nextDate + nextTime
+                var triggerTime = nextDate + nextTime
+
+                // for test
+//                triggerTime = DateUtils.getTimestampAfter5Minutes()
+
                 // 更新任务数据
                 _task.value!!.date = DateUtils.dateTimestampToString(triggerTime)
                 _task.value!!.time = DateUtils.timeTimestampToString(triggerTime)

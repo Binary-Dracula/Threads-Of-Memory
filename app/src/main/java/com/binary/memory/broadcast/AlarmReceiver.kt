@@ -1,6 +1,7 @@
 package com.binary.memory.broadcast
 
 import android.Manifest
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.binary.memory.R
 import com.binary.memory.constants.Constants
 import com.binary.memory.model.Task
+import com.binary.memory.module.LauncherActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -27,6 +29,11 @@ class AlarmReceiver : BroadcastReceiver() {
             intent.extras?.getParcelable("task")
         }
 
+        val launchIntent = Intent(context, LauncherActivity::class.java)
+        launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        val pendingIntent = PendingIntent.getActivity(context,0, launchIntent, PendingIntent.FLAG_IMMUTABLE)
+
         val notificationManager = NotificationManagerCompat.from(context)
 
         // 创建通知
@@ -35,6 +42,7 @@ class AlarmReceiver : BroadcastReceiver() {
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(task?.title ?: "")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
 
         // 发送通知
         if (

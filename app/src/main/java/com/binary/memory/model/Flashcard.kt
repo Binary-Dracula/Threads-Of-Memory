@@ -16,6 +16,10 @@ data class Flashcard(
     // 创建时间
     val createdTime: Long,
     // 提醒时间
-    val remindTime: Long
+    val remindTime: Long,
+    // 所属任务
+    val taskId: Int,
+    // 所属闪卡组
+    val flashGroupId: Int
 )
 

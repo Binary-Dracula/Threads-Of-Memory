@@ -5,11 +5,12 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FlashcardDao {
+interface FlashDao {
     @Insert
     suspend fun insertFlashcard(flashcard: Flashcard)
 
@@ -27,4 +28,25 @@ interface FlashcardDao {
 
     @Query("SELECT * FROM flashcards WHERE id = :id")
     fun getFlashcardById(id: Int): Flow<Flashcard>
+
+
+
+    // 增
+    @Insert
+    fun insertFlashGroup(flashGroup: FlashGroup)
+
+    // 删
+    @Delete
+    fun deleteFlashGroup(flashGroup: FlashGroup)
+
+    @Query("delete from flash_group where id = :id")
+    fun deleteFlashGroupById(id: Int)
+
+    // 改
+    @Update
+    fun updateFlashGroup(flashGroup: FlashGroup)
+
+    // 查
+    @Query("select * from flash_group where id = :id")
+    fun getFlashGroupById(id:Int):Flow<FlashGroup>
 }

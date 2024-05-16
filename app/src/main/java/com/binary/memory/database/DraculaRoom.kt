@@ -5,8 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.binary.memory.database.dao.FlashcardDao
+import com.binary.memory.database.dao.FlashDao
 import com.binary.memory.database.dao.TaskDao
+import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import com.binary.memory.model.Task
 import kotlinx.coroutines.CoroutineScope
@@ -15,10 +16,14 @@ import kotlinx.coroutines.launch
 /**
  *
  */
-@Database(entities = [Task::class, Flashcard::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Task::class, Flashcard::class, FlashGroup::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class DraculaRoom : RoomDatabase() {
     abstract fun taskDao(): TaskDao
-    abstract fun flashcardDao(): FlashcardDao
+    abstract fun flashcardDao(): FlashDao
 
     private class WordDatabaseCallback(
         private val scope: CoroutineScope

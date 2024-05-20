@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">Threads Of Memory</string>
 
+    <string name="add">ADD</string>
     <string name="add_task">ADD TASK</string>
     <string name="delete_task">DELETE TASK</string>
-    <string name="Complete">COMPLETE</string>
     <string name="task_detail">TASK DETAIL</string>
+    <string name="task_list">TASK LIST</string>
+    <string name="Complete">COMPLETE</string>
     <string name="remind_date">REMIND DATE</string>
     <string name="remind_time">REMIND TIME</string>
     <string name="next_remind">NEXT REMIND</string>
     <string name="priority">PRIORITY</string>
+    <string name="add_flash_group_hint">FLASH GROUP TITLE</string>
+    <string name="flash_group_list">FLASH GROUP LIST</string>
+
 
     <string-array name="priority">
         <item>LOW</item>

@@ -1,14 +1,22 @@
 package com.binary.memory.module
 
 import android.content.Intent
+import android.view.MenuItem
 import android.view.View
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.databinding.ActivityMainBinding
+import com.binary.memory.module.flashcard.FlashGroupListFragment
 import com.binary.memory.module.task.AddTaskActivity
 import com.binary.memory.module.task.TaskListFragment
+import com.google.android.material.navigation.NavigationBarView
 
-class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListener {
+
+class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListener,
+    NavigationBarView.OnItemSelectedListener {
+
+    private val taskListFragment = TaskListFragment()
+    private val flashGroupListFragment = FlashGroupListFragment()
 
     override fun layoutId(): Int {
         return R.layout.activity_main
@@ -16,13 +24,13 @@ class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListene
 
     override fun initView() {
         super.initView()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, taskListFragment)
+            .add(R.id.fragment_container, flashGroupListFragment)
+            .hide(flashGroupListFragment)
+            .commit()
         viewBinding.addTask.setOnClickListener(this)
-
-        addTaskListFragment()
-    }
-
-    override fun initObserver() {
-        super.initObserver()
+        viewBinding.bottomNavigation.setOnItemSelectedListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -33,11 +41,18 @@ class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListene
         }
     }
 
-    private fun addTaskListFragment() {
-        val fragment = TaskListFragment.newInstance()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, fragment)
-        transaction.commit()
-    }
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == R.id.task_list)
+            supportFragmentManager.beginTransaction()
+                .show(taskListFragment)
+                .hide(flashGroupListFragment)
+                .commit()
+        else
+            supportFragmentManager.beginTransaction()
+                .show(flashGroupListFragment)
+                .hide(taskListFragment)
+                .commit()
 
+        return true
+    }
 }

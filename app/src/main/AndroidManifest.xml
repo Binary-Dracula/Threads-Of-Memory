@@ -19,7 +19,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_circle"
-        android:label="@string/app_name"
+        android:label="@string/app_name_short"
         android:supportsRtl="true"
         android:theme="@style/Theme.ThreadsOfMemory"
         tools:targetApi="31">

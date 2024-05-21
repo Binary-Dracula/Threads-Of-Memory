@@ -13,7 +13,7 @@ abstract class DraculaFragment<T : ViewDataBinding> : Fragment() {
 
     private var _view: T? = null
 
-    val view get() = _view!!
+    val viewBinding get() = _view!!
 
     abstract val layoutId: Int
 
@@ -23,7 +23,7 @@ abstract class DraculaFragment<T : ViewDataBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _view = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        return view.root
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

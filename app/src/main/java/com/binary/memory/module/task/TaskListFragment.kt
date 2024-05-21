@@ -26,8 +26,8 @@ class TaskListFragment : DraculaFragment<FragmentTaskListBinding>() {
     }
 
     override fun initView() {
-        view.taskList.layoutManager = LinearLayoutManager(requireContext())
-        view.taskList.adapter = adapter
+        viewBinding.taskList.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.taskList.adapter = adapter
         adapter.onItemClickListener = { task ->
             // 跳转到TaskDetailActivity
             TaskDetailActivity.start(requireContext(), task.id)

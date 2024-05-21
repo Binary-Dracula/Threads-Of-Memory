@@ -42,17 +42,19 @@ class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListene
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.task_list)
+        if (menuItem.itemId == R.id.task_list) {
             supportFragmentManager.beginTransaction()
                 .show(taskListFragment)
                 .hide(flashGroupListFragment)
                 .commit()
-        else
+            viewBinding.addTask.show()
+        } else {
             supportFragmentManager.beginTransaction()
                 .show(flashGroupListFragment)
                 .hide(taskListFragment)
                 .commit()
-
+            viewBinding.addTask.hide()
+        }
         return true
     }
 }

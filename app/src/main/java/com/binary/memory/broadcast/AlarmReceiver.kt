@@ -32,13 +32,14 @@ class AlarmReceiver : BroadcastReceiver() {
         val launchIntent = Intent(context, LauncherActivity::class.java)
         launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
-        val pendingIntent = PendingIntent.getActivity(context,0, launchIntent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent =
+            PendingIntent.getActivity(context, 0, launchIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val notificationManager = NotificationManagerCompat.from(context)
 
         // 创建通知
         val builder = NotificationCompat.Builder(context, Constants.CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(task?.title ?: "")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

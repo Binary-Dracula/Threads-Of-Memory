@@ -1,6 +1,7 @@
 package com.binary.memory.repository
 
 import com.binary.memory.database.dao.FlashDao
+import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +37,16 @@ class FlashcardRepository(private val flashDao: FlashDao) {
         return withContext(Dispatchers.IO) {
             flashDao.getFlashcardById(id)
         }
+    }
+
+    suspend fun insertFlashGroup(flashGroup: FlashGroup) {
+        withContext(Dispatchers.IO) {
+            flashDao.insertFlashGroup(flashGroup)
+        }
+    }
+
+    fun getAllFlashGroups(): Flow<List<FlashGroup>> {
+        return flashDao.getAllFlashGroups()
     }
 
 }

@@ -10,7 +10,7 @@ data class FlashGroup(
     // 闪卡组标题
     val flashGroupTitle: String,
     // 闪卡组描述
-    val flashGroupDescription: String,
+    val flashGroupDescription: String? = "",
     // 创建的时间
-    val createDate: String
+    val createDate: String? = ""
 )

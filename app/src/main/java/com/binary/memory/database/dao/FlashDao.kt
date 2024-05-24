@@ -49,4 +49,7 @@ interface FlashDao {
     // 查
     @Query("select * from flash_group where id = :id")
     fun getFlashGroupById(id:Int):Flow<FlashGroup>
+
+    @Query("select * from flash_group")
+    fun getAllFlashGroups():Flow<List<FlashGroup>>
 }

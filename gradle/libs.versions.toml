@@ -15,6 +15,7 @@ room = "2.6.1"
 ksp = "1.9.21-1.0.15"
 easypermissions-ktx = "1.0.0"
 navigation-ktx = "2.3.5"
+splash-screen = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,8 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 easypermissions-ktx = { group = "com.vmadalin", name = "easypermissions-ktx", version.ref = "easypermissions-ktx" }
 navigation-fragment-ktx = {group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-ktx"}
 navigation-ui-ktx = {group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ktx"}
+splash-screen = {group = "androidx.core", name = "core-splashscreen", version.ref = "splash-screen"}
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

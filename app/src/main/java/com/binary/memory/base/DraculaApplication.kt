@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import com.binary.memory.constants.Constants
 import com.binary.memory.database.DraculaRoom
+import com.binary.memory.repository.FlashcardRepository
 import com.binary.memory.repository.TaskRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -28,6 +29,10 @@ class DraculaApplication : Application() {
     }
     val taskRepository by lazy {
         TaskRepository(database.taskDao())
+    }
+
+    val flashcardRepository by lazy {
+        FlashcardRepository(database.flashcardDao())
     }
 
     override fun onCreate() {

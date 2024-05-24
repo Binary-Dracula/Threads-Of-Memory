@@ -1,8 +1,10 @@
 package com.binary.memory.module
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.databinding.ActivityMainBinding
@@ -17,6 +19,11 @@ class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListene
 
     private val taskListFragment = TaskListFragment()
     private val flashGroupListFragment = FlashGroupListFragment()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+        super.onCreate(savedInstanceState)
+    }
 
     override fun layoutId(): Int {
         return R.layout.activity_main

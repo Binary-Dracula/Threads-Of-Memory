@@ -41,6 +41,9 @@
         <activity
             android:name=".module.task.TaskDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".module.flashcard.FlashcardListActivity"
+            android:excludeFromRecents="false" />
         <!--        <activity-->
         <!--            android:name=".module.LauncherActivity"-->
         <!--            android:exported="true">-->

@@ -1,7 +1,6 @@
 package com.binary.memory.module.flashcard
 
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.binary.memory.R
 import com.binary.memory.base.DraculaApplication
@@ -51,6 +50,7 @@ class FlashGroupListFragment : DraculaFragment<FragmentFlashGroupListBinding>(),
     }
 
     private fun flashGroupItemClickListener(flashGroup: FlashGroup) {
-        Toast.makeText(requireContext(), flashGroup.flashGroupTitle, Toast.LENGTH_SHORT).show()
+        // 进入闪卡列表
+        FlashcardListActivity.start(flashGroup, requireContext())
     }
 }

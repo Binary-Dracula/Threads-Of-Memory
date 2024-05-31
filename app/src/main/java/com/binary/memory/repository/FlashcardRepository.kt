@@ -27,11 +27,7 @@ class FlashcardRepository(private val flashDao: FlashDao) {
         }
     }
 
-    suspend fun getAllFlashcards(): Flow<List<Flashcard>> {
-        return withContext(Dispatchers.IO) {
-            flashDao.getAllFlashcards()
-        }
-    }
+    fun getAllFlashcards(): Flow<List<Flashcard>> = flashDao.getAllFlashcards()
 
     suspend fun getFlashcardById(id: Int): Flow<Flashcard> {
         return withContext(Dispatchers.IO) {

@@ -12,9 +12,11 @@ import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import com.binary.memory.repository.FlashcardRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class FlashcardViewModel(
@@ -29,9 +31,8 @@ class FlashcardViewModel(
 
     val insertFlashGroupSuccess = MutableLiveData<Boolean>()
 
-    private val _flashcards = MutableStateFlow<List<Flashcard>>(emptyList())
-    val flashcards: StateFlow<List<Flashcard>>
-        get() = _flashcards
+    val flashcardList: StateFlow<List<Flashcard>> = repository.getAllFlashcards()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _flashcard = MutableStateFlow<Flashcard?>(null)
     val flashcard: StateFlow<Flashcard?>
@@ -43,13 +44,6 @@ class FlashcardViewModel(
         }
     }
 
-    fun getAllFlashcards() {
-        viewModelScope.launch {
-            repository.getAllFlashcards().collect {
-                _flashcards.value = it
-            }
-        }
-    }
 
     fun getFlashcardById(id: Int) {
         viewModelScope.launch {

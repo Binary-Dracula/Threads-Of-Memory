@@ -23,12 +23,11 @@ interface FlashDao {
     @Update
     suspend fun updateFlashcard(flashcard: Flashcard)
 
-    @Query("SELECT * FROM flashcards")
-    fun getAllFlashcards(): Flow<List<Flashcard>>
+    @Query("SELECT * FROM flashcards WHERE flashGroupId = :flashGroupId")
+    fun getAllFlashcards(flashGroupId: Int): Flow<List<Flashcard>>
 
     @Query("SELECT * FROM flashcards WHERE id = :id")
     fun getFlashcardById(id: Int): Flow<Flashcard>
-
 
 
     // 增
@@ -48,8 +47,8 @@ interface FlashDao {
 
     // 查
     @Query("select * from flash_group where id = :id")
-    fun getFlashGroupById(id:Int):Flow<FlashGroup>
+    fun getFlashGroupById(id: Int): Flow<FlashGroup>
 
     @Query("select * from flash_group")
-    fun getAllFlashGroups():Flow<List<FlashGroup>>
+    fun getAllFlashGroups(): Flow<List<FlashGroup>>
 }

@@ -14,6 +14,10 @@
     <string name="priority">PRIORITY</string>
     <string name="add_flash_group_hint">FLASH GROUP TITLE</string>
     <string name="flash_group_list">FLASH GROUP LIST</string>
+    <string name="save">SAVE</string>
+    <string name="question">QUESTION</string>
+    <string name="answer">ANSWER</string>
+    <string name="add_flash_card">ADD FLASH CARD</string>"
 
 
     <string-array name="priority">

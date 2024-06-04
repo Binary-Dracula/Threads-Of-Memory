@@ -1,6 +1,5 @@
 package com.binary.memory.module.flashcard
 
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,7 @@ import com.binary.memory.viewmodel.FlashcardViewModelFactory
 import kotlinx.coroutines.launch
 
 class FlashcardListFragment(val flashGroup: FlashGroup?) :
-    DraculaFragment<FragmentFlashcardListBinding>(), View.OnClickListener {
+    DraculaFragment<FragmentFlashcardListBinding>() {
 
     private val viewModel by viewModels<FlashcardViewModel> {
         FlashcardViewModelFactory(
@@ -34,8 +33,11 @@ class FlashcardListFragment(val flashGroup: FlashGroup?) :
         adapter = FlashcardListAdapter(mutableListOf())
         viewBinding.flashcardList.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.flashcardList.adapter = adapter
+    }
+
+    override fun initObserver() {
         lifecycleScope.launch {
-            viewModel.flashcardList.collect {
+            viewModel.getFlashcardList(flashGroup!!.id).collect {
                 adapter.setItems(
                     it,
                     areItemsTheSame = { oldItem, newItem -> oldItem == newItem },
@@ -45,20 +47,6 @@ class FlashcardListFragment(val flashGroup: FlashGroup?) :
                                 && oldItem.back == newItem.back
                     }
                 )
-            }
-        }
-
-        viewBinding.addFlashCard.setOnClickListener(this)
-    }
-
-    override fun initObserver() {
-
-    }
-
-    override fun onClick(v: View?) {
-        when (v) {
-            viewBinding.addFlashCard -> {
-
             }
         }
     }

@@ -3,12 +3,13 @@ package com.binary.memory.module.flashcard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.databinding.ActivityFlashcardListBinding
 import com.binary.memory.model.FlashGroup
 
-class FlashcardListActivity : DraculaActivity<ActivityFlashcardListBinding>() {
+class FlashcardListActivity : DraculaActivity<ActivityFlashcardListBinding>(), View.OnClickListener {
 
     companion object {
         fun start(flashGroup: FlashGroup, context: Context) {
@@ -26,11 +27,31 @@ class FlashcardListActivity : DraculaActivity<ActivityFlashcardListBinding>() {
 
     override fun initView() {
         super.initView()
+        initToolbar(
+            findViewById(R.id.toolbar),
+            true,
+            intent.extras?.getParcelable<FlashGroup>("flashGroup")?.flashGroupTitle
+        )
+
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.fragment_container,
                 FlashcardListFragment(intent.extras?.getParcelable("flashGroup"))
             )
             .commitNow()
+
+        viewBinding.addFlashCard.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when (v?.id) {
+            R.id.add_flash_card -> {
+                AddFlashcardActivity.start(
+                    intent.extras?.getParcelable("flashGroup")!!,
+                    this
+                )
+            }
+        }
     }
 }

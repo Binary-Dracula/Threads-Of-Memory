@@ -25,7 +25,7 @@ class AddTaskActivity : DraculaActivity<ActivityAddTaskBinding>() {
 
     override fun initView() {
         super.initView()
-        initToolbar(viewBinding.toolbar.toolbar, true, R.string.add_task)
+        initToolbar(findViewById(R.id.toolbar), true, getString(R.string.add_task))
         addClickListener(viewBinding.addTask)
 
         viewBinding.priorityGroup.init(viewModel.priorityList) { priority ->

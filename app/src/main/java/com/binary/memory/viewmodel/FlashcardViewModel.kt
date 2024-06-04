@@ -11,6 +11,7 @@ import com.binary.memory.base.DraculaViewModel
 import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import com.binary.memory.repository.FlashcardRepository
+import com.binary.memory.utils.DateUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,19 +32,31 @@ class FlashcardViewModel(
 
     val insertFlashGroupSuccess = MutableLiveData<Boolean>()
 
-    val flashcardList: StateFlow<List<Flashcard>> = repository.getAllFlashcards()
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    fun getFlashcardList(flashGroupId: Int): StateFlow<List<Flashcard>> {
+        return repository.getAllFlashcards(flashGroupId)
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    }
+
 
     private val _flashcard = MutableStateFlow<Flashcard?>(null)
     val flashcard: StateFlow<Flashcard?>
         get() = _flashcard
 
-    fun insertFlashcard(flashcard: Flashcard) {
+    val insertFlashcardSuccess = MutableLiveData<Boolean>()
+
+    fun insertFlashcard(question: String, answer: String, flashGroupId: Int) {
         viewModelScope.launch {
-            repository.insertFlashcard(flashcard)
+            repository.insertFlashcard(
+                Flashcard(
+                    front = question,
+                    back = answer,
+                    createdTime = DateUtils.getCurrentTimestamp(),
+                    flashGroupId = flashGroupId
+                )
+            )
+            insertFlashcardSuccess.value = true
         }
     }
-
 
     fun getFlashcardById(id: Int) {
         viewModelScope.launch {

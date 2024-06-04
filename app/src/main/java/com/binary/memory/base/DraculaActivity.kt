@@ -3,7 +3,6 @@ package com.binary.memory.base
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -36,11 +35,15 @@ abstract class DraculaActivity<T : ViewDataBinding> : AppCompatActivity(), View.
 
     open fun initView() {}
 
-    fun initToolbar(toolbar: Toolbar, displayHomeAsUp: Boolean, @StringRes titleRes: Int?) {
+    fun initToolbar(
+        toolbar: Toolbar,
+        displayHomeAsUp: Boolean,
+        title: String?
+    ) {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(displayHomeAsUp)
-        if (titleRes != null) {
-            supportActionBar?.setTitle(titleRes)
+        if (!title.isNullOrBlank()) {
+            supportActionBar?.title = title
         }
     }
 

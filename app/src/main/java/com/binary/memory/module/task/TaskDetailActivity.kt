@@ -24,7 +24,7 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
     }
 
     override fun initView() {
-        initToolbar(viewBinding.toolbar.toolbar, true, R.string.task_detail)
+        initToolbar(findViewById(R.id.toolbar), true, getString(R.string.task_detail))
 
         viewBinding.difficultyLevel.init(viewModel.difficultyLevelList, ::onDifficultyLevelSelected)
 

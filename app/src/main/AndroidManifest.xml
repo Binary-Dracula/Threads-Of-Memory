@@ -43,7 +43,10 @@
             android:exported="false" />
         <activity
             android:name=".module.flashcard.FlashcardListActivity"
-            android:excludeFromRecents="false" />
+            android:exported="false" />
+        <activity
+            android:name=".module.flashcard.AddFlashcardActivity"
+            android:exported="false" />
         <!--        <activity-->
         <!--            android:name=".module.LauncherActivity"-->
         <!--            android:exported="true">-->

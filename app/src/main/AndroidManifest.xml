@@ -47,6 +47,9 @@
         <activity
             android:name=".module.flashcard.AddFlashcardActivity"
             android:exported="false" />
+        <activity
+            android:name=".module.flashcard.FlashcardDetailActivity"
+            android:exported="false" />
         <!--        <activity-->
         <!--            android:name=".module.LauncherActivity"-->
         <!--            android:exported="true">-->

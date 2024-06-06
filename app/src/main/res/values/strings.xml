@@ -17,7 +17,9 @@
     <string name="save">SAVE</string>
     <string name="question">QUESTION</string>
     <string name="answer">ANSWER</string>
-    <string name="add_flash_card">ADD FLASH CARD</string>"
+    <string name="add_flash_card">ADD FLASH CARD</string>
+    <string name="show_answer">SHOW ANSWER</string>"
+    <string name="flashcard">FLASH CARD</string>
 
 
     <string-array name="priority">

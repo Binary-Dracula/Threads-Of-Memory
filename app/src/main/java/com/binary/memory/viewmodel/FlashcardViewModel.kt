@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.binary.memory.R
 import com.binary.memory.base.DraculaViewModel
+import com.binary.memory.entity.DifficultyLevel
 import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import com.binary.memory.repository.FlashcardRepository
@@ -43,6 +45,15 @@ class FlashcardViewModel(
         get() = _flashcard
 
     val insertFlashcardSuccess = MutableLiveData<Boolean>()
+
+    val difficultyLevel = mutableListOf<DifficultyLevel>()
+
+    init {
+        application.resources.getStringArray(R.array.difficulty_level)
+            .forEachIndexed { index, string ->
+                difficultyLevel.add(DifficultyLevel(index, string))
+            }
+    }
 
     fun insertFlashcard(question: String, answer: String, flashGroupId: Int) {
         viewModelScope.launch {

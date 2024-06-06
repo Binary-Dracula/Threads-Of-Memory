@@ -51,9 +51,13 @@ abstract class DraculaAdapter<T, VB : ViewDataBinding>(
 
     inner class BaseViewHolder(private val binding: VB) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: T) {
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(item)
+            }
             onBindData(binding, item)
             binding.executePendingBindings()
         }
     }
 
+    var onItemClickListener: ((T) -> Unit)? = null
 }

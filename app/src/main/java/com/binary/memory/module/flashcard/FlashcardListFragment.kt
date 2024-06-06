@@ -8,6 +8,7 @@ import com.binary.memory.base.DraculaApplication
 import com.binary.memory.base.DraculaFragment
 import com.binary.memory.databinding.FragmentFlashcardListBinding
 import com.binary.memory.model.FlashGroup
+import com.binary.memory.model.Flashcard
 import com.binary.memory.module.flashcard.adapter.FlashcardListAdapter
 import com.binary.memory.viewmodel.FlashcardViewModel
 import com.binary.memory.viewmodel.FlashcardViewModelFactory
@@ -31,6 +32,7 @@ class FlashcardListFragment(val flashGroup: FlashGroup?) :
 
     override fun initView() {
         adapter = FlashcardListAdapter(mutableListOf())
+        adapter.onItemClickListener = ::onFlashcardClickCallback
         viewBinding.flashcardList.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.flashcardList.adapter = adapter
     }
@@ -49,5 +51,9 @@ class FlashcardListFragment(val flashGroup: FlashGroup?) :
                 )
             }
         }
+    }
+
+    private fun onFlashcardClickCallback(flashcard: Flashcard) {
+        FlashcardDetailActivity.start(flashcard, requireContext())
     }
 }

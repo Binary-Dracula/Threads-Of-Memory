@@ -20,6 +20,9 @@
     <string name="add_flash_card">ADD FLASH CARD</string>
     <string name="show_answer">SHOW ANSWER</string>"
     <string name="flashcard">FLASH CARD</string>
+    <string name="previous">PREVIOUS</string>
+    <string name="next">NEXT</string>
+    <string name="no_more">NO MORE</string>
 
 
     <string-array name="priority">

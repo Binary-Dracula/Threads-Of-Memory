@@ -14,9 +14,7 @@ import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import com.binary.memory.repository.FlashcardRepository
 import com.binary.memory.utils.DateUtils
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -33,26 +31,32 @@ class FlashcardViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     val insertFlashGroupSuccess = MutableLiveData<Boolean>()
-
-    fun getFlashcardList(flashGroupId: Int): StateFlow<List<Flashcard>> {
-        return repository.getAllFlashcards(flashGroupId)
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-    }
-
-
-    private val _flashcard = MutableStateFlow<Flashcard?>(null)
-    val flashcard: StateFlow<Flashcard?>
-        get() = _flashcard
-
     val insertFlashcardSuccess = MutableLiveData<Boolean>()
 
+    // Difficulty Level
     val difficultyLevel = mutableListOf<DifficultyLevel>()
+
+    private val _currentFlashcard = MutableLiveData<Flashcard?>()
+    val currentFlashcard: LiveData<Flashcard?> = _currentFlashcard
+    private var currentFlashcardIndex = -1
+    private var flashcards: List<Flashcard> = emptyList()
 
     init {
         application.resources.getStringArray(R.array.difficulty_level)
             .forEachIndexed { index, string ->
                 difficultyLevel.add(DifficultyLevel(index, string))
             }
+    }
+
+    fun insertFlashGroup(flashGroupName: String) {
+        viewModelScope.launch {
+            repository.insertFlashGroup(
+                FlashGroup(
+                    flashGroupTitle = flashGroupName
+                )
+            )
+            insertFlashGroupSuccess.value = true
+        }
     }
 
     fun insertFlashcard(question: String, answer: String, flashGroupId: Int) {
@@ -69,36 +73,36 @@ class FlashcardViewModel(
         }
     }
 
-    fun getFlashcardById(id: Int) {
+    fun getFlashcardList(flashGroupId: Int) = repository.getAllFlashcards(flashGroupId)
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    fun loadCurrentFlashcard(flashcardGroupId: Int, flashcardId: Int) {
         viewModelScope.launch {
-            repository.getFlashcardById(id).collect {
-                _flashcard.value = it
+            repository.getAllFlashcards(flashcardGroupId).collect { flashcards ->
+                this@FlashcardViewModel.flashcards = flashcards
+                currentFlashcardIndex = flashcards.indexOfFirst { it.id == flashcardId }
+                if (currentFlashcardIndex != -1) {
+                    _currentFlashcard.value = flashcards[currentFlashcardIndex]
+                }
             }
         }
     }
 
-    fun updateFlashcard(flashcard: Flashcard) {
-        viewModelScope.launch {
-            repository.updateFlashcard(flashcard)
+    fun loadPreviousFlashcard() {
+        if (currentFlashcardIndex > 0) {
+            currentFlashcardIndex -= 1
+            _currentFlashcard.value = flashcards[currentFlashcardIndex]
         }
     }
 
-    fun deleteFlashcard(flashcard: Flashcard) {
-        viewModelScope.launch {
-            repository.deleteFlashcard(flashcard)
+    fun loadNextFlashcard() {
+        if (currentFlashcardIndex < flashcards.size - 1) {
+            currentFlashcardIndex += 1
+            _currentFlashcard.value = flashcards[currentFlashcardIndex]
         }
     }
 
-    fun insertFlashGroup(flashGroupName: String) {
-        viewModelScope.launch {
-            repository.insertFlashGroup(
-                FlashGroup(
-                    flashGroupTitle = flashGroupName
-                )
-            )
-            insertFlashGroupSuccess.value = true
-        }
-    }
+
 }
 
 class FlashcardViewModelFactory(

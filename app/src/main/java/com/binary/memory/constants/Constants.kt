@@ -14,4 +14,8 @@ object Constants {
     val PERMISSION_NOTIFICATION = arrayOf(
         android.Manifest.permission.POST_NOTIFICATIONS
     )
+
+    const val KEY_FLASHCARD_GROUP_ID = "FLASHCARD_GROUP_ID"
+    const val KEY_FLASHCARD_GROUP = "FLASHCARD_GROUP"
+    const val KEY_FLASHCARD_ID = "FLASHCARD_ID"
 }

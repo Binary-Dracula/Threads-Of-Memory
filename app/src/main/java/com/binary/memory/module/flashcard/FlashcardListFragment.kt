@@ -14,7 +14,7 @@ import com.binary.memory.viewmodel.FlashcardViewModel
 import com.binary.memory.viewmodel.FlashcardViewModelFactory
 import kotlinx.coroutines.launch
 
-class FlashcardListFragment(val flashGroup: FlashGroup?) :
+class FlashcardListFragment(val flashGroup: FlashGroup) :
     DraculaFragment<FragmentFlashcardListBinding>() {
 
     private val viewModel by viewModels<FlashcardViewModel> {
@@ -39,7 +39,7 @@ class FlashcardListFragment(val flashGroup: FlashGroup?) :
 
     override fun initObserver() {
         lifecycleScope.launch {
-            viewModel.getFlashcardList(flashGroup!!.id).collect {
+            viewModel.getFlashcardList(flashGroup.id).collect {
                 adapter.setItems(
                     it,
                     areItemsTheSame = { oldItem, newItem -> oldItem == newItem },
@@ -54,6 +54,6 @@ class FlashcardListFragment(val flashGroup: FlashGroup?) :
     }
 
     private fun onFlashcardClickCallback(flashcard: Flashcard) {
-        FlashcardDetailActivity.start(flashcard, requireContext())
+        FlashcardDetailActivity.start(flashGroup.id, flashcard.id, requireContext())
     }
 }

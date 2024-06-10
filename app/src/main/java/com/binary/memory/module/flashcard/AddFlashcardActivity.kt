@@ -8,8 +8,8 @@ import androidx.activity.viewModels
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.base.DraculaApplication
+import com.binary.memory.constants.Constants
 import com.binary.memory.databinding.ActivityAddFlashcardBinding
-import com.binary.memory.model.FlashGroup
 import com.binary.memory.viewmodel.FlashcardViewModel
 import com.binary.memory.viewmodel.FlashcardViewModelFactory
 
@@ -23,17 +23,13 @@ class AddFlashcardActivity : DraculaActivity<ActivityAddFlashcardBinding>(), Vie
     }
 
     companion object {
-        fun start(flashGroup: FlashGroup, context: Context) {
+        fun start(flashGroupId: Int, context: Context) {
             val bundle = Bundle()
-            bundle.putParcelable("flashGroup", flashGroup)
+            bundle.putInt(Constants.KEY_FLASHCARD_GROUP_ID, flashGroupId)
             val intent = Intent(context, AddFlashcardActivity::class.java)
             intent.putExtras(bundle)
             context.startActivity(intent)
         }
-    }
-
-    private fun getFlashGroup(): FlashGroup {
-        return intent.extras?.getParcelable("flashGroup")!!
     }
 
     override fun layoutId(): Int {
@@ -59,7 +55,7 @@ class AddFlashcardActivity : DraculaActivity<ActivityAddFlashcardBinding>(), Vie
                 viewModel.insertFlashcard(
                     viewBinding.etQuestion.text.toString(),
                     viewBinding.etAnswer.text.toString(),
-                    getFlashGroup().id
+                    intent.extras?.getInt(Constants.KEY_FLASHCARD_GROUP_ID)!!
                 )
             }
         }

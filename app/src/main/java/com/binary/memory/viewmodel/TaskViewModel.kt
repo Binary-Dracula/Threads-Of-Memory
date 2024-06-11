@@ -14,6 +14,8 @@ import com.binary.memory.model.Task
 import com.binary.memory.repository.TaskRepository
 import com.binary.memory.utils.AlarmUtils
 import com.binary.memory.utils.DateUtils
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TaskViewModel(
@@ -24,8 +26,8 @@ class TaskViewModel(
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task?> = _task
 
-    private val _taskList = MutableLiveData<List<Task>>()
-    val taskList: LiveData<List<Task>> = _taskList
+    fun getTaskList() = repository.getAllTasks()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val priorityList: ArrayList<Priority> = ArrayList()
     private var priority: Priority? = null
@@ -147,22 +149,6 @@ class TaskViewModel(
         viewModelScope.launch {
             repository.getTaskById(id)?.collect {
                 _task.value = it
-            }
-        }
-    }
-
-    fun getAllTasks() {
-        viewModelScope.launch {
-            repository.getAllTasks().collect {
-                _taskList.value = it
-            }
-        }
-    }
-
-    fun getTasksByDate(date: String) {
-        viewModelScope.launch {
-            repository.getTasksByDate(date).collect {
-                _taskList.value = it
             }
         }
     }

@@ -14,7 +14,7 @@ import com.binary.memory.viewmodel.FlashcardViewModel
 import com.binary.memory.viewmodel.FlashcardViewModelFactory
 import kotlinx.coroutines.launch
 
-class FlashcardListFragment(val flashGroup: FlashGroup) :
+class FlashcardListFragment private constructor():
     DraculaFragment<FragmentFlashcardListBinding>() {
 
     private val viewModel by viewModels<FlashcardViewModel> {
@@ -55,5 +55,14 @@ class FlashcardListFragment(val flashGroup: FlashGroup) :
 
     private fun onFlashcardClickCallback(flashcard: Flashcard) {
         FlashcardDetailActivity.start(flashGroup.id, flashcard.id, requireContext())
+    }
+
+    companion object {
+        private lateinit var flashGroup: FlashGroup
+        fun newInstance(flashGroup: FlashGroup): FlashcardListFragment {
+            return FlashcardListFragment().apply {
+                FlashcardListFragment.flashGroup = flashGroup
+            }
+        }
     }
 }

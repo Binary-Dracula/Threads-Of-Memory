@@ -38,7 +38,7 @@ class FlashcardListActivity : DraculaActivity<ActivityFlashcardListBinding>(),
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.fragment_container,
-                FlashcardListFragment(intent.extras?.getParcelable(Constants.KEY_FLASHCARD_GROUP)!!)
+                FlashcardListFragment.newInstance(intent.extras?.getParcelable(Constants.KEY_FLASHCARD_GROUP)!!)
             )
             .commitNow()
 

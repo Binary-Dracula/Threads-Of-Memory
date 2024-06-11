@@ -1,6 +1,7 @@
 package com.binary.memory.module.task
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binary.memory.R
 import com.binary.memory.base.DraculaApplication
@@ -9,8 +10,9 @@ import com.binary.memory.databinding.FragmentTaskListBinding
 import com.binary.memory.module.task.adapter.TaskListAdapter
 import com.binary.memory.viewmodel.TaskViewModel
 import com.binary.memory.viewmodel.TaskViewModelFactory
+import kotlinx.coroutines.launch
 
-class TaskListFragment : DraculaFragment<FragmentTaskListBinding>() {
+class TaskListFragment private constructor() : DraculaFragment<FragmentTaskListBinding>() {
 
     override val layoutId: Int
         get() = R.layout.fragment_task_list
@@ -35,14 +37,19 @@ class TaskListFragment : DraculaFragment<FragmentTaskListBinding>() {
     }
 
     override fun initObserver() {
-        viewModel.taskList.observe(viewLifecycleOwner) {
-            adapter.updateTasks(it)
+        lifecycleScope.launch {
+            viewModel.getTaskList().collect {
+                adapter.setItems(
+                    it,
+                    areItemsTheSame = { oldTask, newTask ->
+                        oldTask.id == newTask.id
+                    },
+                    areContentsTheSame = { oldTask, newTask ->
+                        oldTask.title == newTask.title && oldTask.description == newTask.description
+                    }
+                )
+            }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAllTasks()
     }
 
     companion object {

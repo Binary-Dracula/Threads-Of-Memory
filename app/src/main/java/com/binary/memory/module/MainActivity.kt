@@ -17,8 +17,8 @@ import com.google.android.material.navigation.NavigationBarView
 class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListener,
     NavigationBarView.OnItemSelectedListener {
 
-    private val taskListFragment = TaskListFragment()
-    private val flashGroupListFragment = FlashGroupListFragment()
+    private val taskListFragment = TaskListFragment.newInstance()
+    private val flashGroupListFragment = FlashGroupListFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()

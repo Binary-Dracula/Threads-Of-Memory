@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.binary.memory.R
 import com.binary.memory.base.DraculaViewModel
@@ -15,8 +14,6 @@ import com.binary.memory.model.Flashcard
 import com.binary.memory.repository.FlashcardRepository
 import com.binary.memory.utils.DateUtils
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -25,10 +22,8 @@ class FlashcardViewModel(
     private val repository: FlashcardRepository
 ) : DraculaViewModel(application) {
 
-    val flashGroups: LiveData<List<FlashGroup>> = repository.getAllFlashGroups()
-        .onStart { }
-        .catch { }
-        .asLiveData(viewModelScope.coroutineContext)
+    fun getFlashGroups() = repository.getAllFlashGroups()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val insertFlashGroupSuccess = MutableLiveData<Boolean>()
     val insertFlashcardSuccess = MutableLiveData<Boolean>()

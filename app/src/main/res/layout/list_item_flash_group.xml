@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="flashGroup"
             type="com.binary.memory.model.FlashGroup" />
@@ -11,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/listPreferredItemHeight">
+        android:layout_height="?attr/listPreferredItemHeight"
+        android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/flash_group_name"

@@ -8,8 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
         <include layout="@layout/view_toolbar" />
 
@@ -30,9 +29,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/question"
                 android:inputType="textCapSentences"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -52,9 +49,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/answer"
                 android:inputType="textCapSentences"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

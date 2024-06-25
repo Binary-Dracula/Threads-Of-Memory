@@ -61,7 +61,8 @@ class FlashcardViewModel(
                     front = question,
                     back = answer,
                     createdTime = DateUtils.getCurrentTimestamp(),
-                    flashGroupId = flashGroupId
+                    flashGroupId = flashGroupId,
+                    difficultyLevel = difficultyLevel.find { it.level == 0 }?.level ?: 0
                 )
             )
             insertFlashcardSuccess.value = true
@@ -87,6 +88,8 @@ class FlashcardViewModel(
         if (currentFlashcardIndex > 0) {
             currentFlashcardIndex -= 1
             _currentFlashcard.value = flashcards[currentFlashcardIndex]
+        } else {
+            _currentFlashcard.value = null
         }
     }
 
@@ -94,9 +97,23 @@ class FlashcardViewModel(
         if (currentFlashcardIndex < flashcards.size - 1) {
             currentFlashcardIndex += 1
             _currentFlashcard.value = flashcards[currentFlashcardIndex]
+        } else {
+            _currentFlashcard.value = null
         }
     }
 
+    private fun updateFlashcard(flashcard: Flashcard) {
+        viewModelScope.launch {
+            repository.updateFlashcard(flashcard)
+        }
+    }
+
+    fun setCurrentDifficultyLevel(difficultyLevel: DifficultyLevel) {
+        _currentFlashcard.value?.let {
+            it.difficultyLevel = difficultyLevel.level
+            updateFlashcard(it)
+        }
+    }
 
 }
 

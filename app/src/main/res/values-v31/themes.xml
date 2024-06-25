@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.App.Splash" parent="Theme.SplashScreen">
+        <!-- 设置启动屏幕的背景颜色 -->
+        <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+        <!-- 设置启动屏幕的图标 -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_splash</item>
+        <!-- 设置启动屏幕图标的动画持续时间 -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <!-- 保持启动屏幕背景直到应用的内容准备好 -->
+        <item name="postSplashScreenTheme">@style/Theme.ThreadsOfMemory</item>
+    </style>
+
+</resources>

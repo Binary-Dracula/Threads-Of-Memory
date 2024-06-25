@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- 浅色主题 -->
+    <color name="colorPrimary">#2196F3</color> <!-- 主要颜色 -->
+    <color name="colorPrimaryVariant">#1976D2</color> <!-- 主要颜色的变体 -->
+    <color name="colorAccent">#FFC107</color> <!-- 强调颜色（次要颜色） -->
+    <color name="colorBackground">#FFFFFF</color> <!-- 背景颜色 -->
+    <color name="colorSurface">#FFFFFF</color> <!-- 界面表面颜色 -->
+    <color name="colorError">#B00020</color> <!-- 错误颜色 -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- 主要颜色上的文字颜色 -->
+    <color name="colorOnSecondary">#000000</color> <!-- 次要颜色上的文字颜色 -->
+    <color name="colorOnBackground">#000000</color> <!-- 背景颜色上的文字颜色 -->
+    <color name="colorOnSurface">#000000</color> <!-- 界面表面颜色上的文字颜色 -->
+    <color name="colorOnError">#FFFFFF</color> <!-- 错误颜色上的文字颜色 -->
 </resources>

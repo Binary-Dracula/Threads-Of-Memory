@@ -26,6 +26,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val task: Task? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.extras?.getParcelable("task", Task::class.java)
         } else {
+            @Suppress("DEPRECATION")
             intent.extras?.getParcelable("task")
         }
 

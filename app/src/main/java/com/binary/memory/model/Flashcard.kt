@@ -13,12 +13,14 @@ import kotlinx.parcelize.Parcelize
 data class Flashcard(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     // 正面内容
-    val front: String,
+    var front: String,
     // 背面内容
-    val back: String,
+    var back: String,
     // 创建时间
-    val createdTime: Long,
+    var createdTime: Long,
     // 所属闪卡组
-    val flashGroupId: Int
+    var flashGroupId: Int,
+    // 难度
+    var difficultyLevel: Int,
 ) : Parcelable
 

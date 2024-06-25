@@ -63,7 +63,11 @@ class FlashcardDetailActivity : DraculaActivity<ActivityFlashcardDetailBinding>(
     override fun initObserver() {
         super.initObserver()
         viewModel.currentFlashcard.observe(this) {
-            setFlashcard(it)
+            if (it == null) {
+                Toast.makeText(this, R.string.no_more, Toast.LENGTH_SHORT).show()
+            } else {
+                setFlashcard(it)
+            }
         }
     }
 
@@ -77,6 +81,8 @@ class FlashcardDetailActivity : DraculaActivity<ActivityFlashcardDetailBinding>(
         }
         viewBinding.flashcard = flashcard
         viewBinding.executePendingBindings()
+
+        viewBinding.viewOptionGroup.selected(flashcard.difficultyLevel)
     }
 
     override fun onClick(v: View?) {
@@ -97,6 +103,6 @@ class FlashcardDetailActivity : DraculaActivity<ActivityFlashcardDetailBinding>(
     }
 
     private fun onDifficultyLevelChanged(difficultyLevel: DifficultyLevel) {
-        if (!viewBinding.tvFlashcardBack.isVisible) return
+        viewModel.setCurrentDifficultyLevel(difficultyLevel)
     }
 }

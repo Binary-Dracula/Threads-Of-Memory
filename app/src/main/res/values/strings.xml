@@ -2,39 +2,42 @@
     <string name="app_name">Threads Of Memory</string>
     <string name="app_name_short">TOM</string>
 
-    <string name="add">ADD</string>
-    <string name="add_task">ADD TASK</string>
-    <string name="delete_task">DELETE TASK</string>
-    <string name="task_detail">TASK DETAIL</string>
-    <string name="task_list">TASK LIST</string>
-    <string name="Complete">COMPLETE</string>
-    <string name="remind_date">REMIND DATE</string>
-    <string name="remind_time">REMIND TIME</string>
-    <string name="next_remind">NEXT REMIND</string>
-    <string name="priority">PRIORITY</string>
-    <string name="add_flash_group_hint">FLASH GROUP TITLE</string>
-    <string name="flash_group_list">FLASH GROUP LIST</string>
-    <string name="save">SAVE</string>
-    <string name="question">QUESTION</string>
-    <string name="answer">ANSWER</string>
-    <string name="add_flash_card">ADD FLASH CARD</string>
-    <string name="show_answer">SHOW ANSWER</string>"
-    <string name="flashcard">FLASH CARD</string>
-    <string name="previous">PREVIOUS</string>
-    <string name="next">NEXT</string>
-    <string name="no_more">NO MORE</string>
-
+    <string name="add">添加</string>
+    <string name="add_task">添加任务</string>
+    <string name="delete_task">删除任务</string>
+    <string name="task_detail">任务详情</string>
+    <string name="task_list">任务列表</string>
+    <string name="Complete">完成</string>
+    <string name="remind_date">提醒日期</string>
+    <string name="remind_time">提醒时间</string>
+    <string name="next_remind">下次提醒</string>
+    <string name="priority">优先级</string>
+    <string name="add_flash_group_hint">闪卡组标题</string>
+    <string name="flash_group_list">闪卡组列表</string>
+    <string name="save">保存</string>
+    <string name="question">问题</string>
+    <string name="answer">答案</string>
+    <string name="add_flash_card">添加闪卡</string>
+    <string name="show_answer">显示答案</string>"
+    <string name="flashcard">闪卡</string>
+    <string name="previous">上一个</string>
+    <string name="next">下一个</string>
+    <string name="no_more">没有更多</string>
+    <string name="ok">好的</string>
+    <string name="cancel">取消</string>
+    <string name="task_title">任务标题</string>
+    <string name="task_description">任务描述</string>
 
     <string-array name="priority">
-        <item>LOW</item>
-        <item>MEDIUM</item>
-        <item>HIGH</item>
+        <item>低</item>
+        <item>中</item>
+        <item>高</item>
     </string-array>
 
     <string-array name="difficulty_level">
-        <item>HARD</item>
-        <item>GOOD</item>
-        <item>EASY</item>
+        <item>困难</item>
+        <item>普通</item>
+        <item>简单</item>
     </string-array>
 
     <string name="permission_rationale">精准闹钟理由</string>

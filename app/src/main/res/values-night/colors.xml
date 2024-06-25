@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色主题 -->
+    <color name="colorPrimary">#1F2933</color> <!-- 主要颜色 -->
+    <color name="colorPrimaryVariant">#3E4C59</color> <!-- 主要颜色的变体 -->
+    <color name="colorAccent">#FFC107</color> <!-- 强调颜色（次要颜色） -->
+    <color name="colorBackground">#121212</color> <!-- 背景颜色 -->
+    <color name="colorSurface">#1E1E1E</color> <!-- 界面表面颜色 -->
+    <color name="colorError">#CF6679</color> <!-- 错误颜色 -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- 主要颜色上的文字颜色 -->
+    <color name="colorOnSecondary">#000000</color> <!-- 次要颜色上的文字颜色 -->
+    <color name="colorOnBackground">#FFFFFF</color> <!-- 背景颜色上的文字颜色 -->
+    <color name="colorOnSurface">#FFFFFF</color> <!-- 界面表面颜色上的文字颜色 -->
+    <color name="colorOnError">#000000</color> <!-- 错误颜色上的文字颜色 -->
+</resources>

@@ -1,9 +1,12 @@
 package com.binary.memory.module
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.DecelerateInterpolator
+import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
@@ -21,8 +24,26 @@ class MainActivity : DraculaActivity<ActivityMainBinding>(), View.OnClickListene
     private val flashGroupListFragment = FlashGroupListFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        // 安装启动屏幕
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+        // 设置启动屏幕的退出动画
+        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+            val slideUp = ObjectAnimator.ofFloat(
+                splashScreenViewProvider.view,
+                View.TRANSLATION_Y,
+                0f,
+                -splashScreenViewProvider.view.height.toFloat()
+            )
+            slideUp.interpolator = DecelerateInterpolator()
+            slideUp.duration = 500L
+
+            slideUp.doOnEnd {
+                splashScreenViewProvider.remove()
+            }
+
+            slideUp.start()
+        }
     }
 
     override fun layoutId(): Int {

@@ -35,7 +35,7 @@ class DateTimeGroup @JvmOverloads constructor(
     }
 
     private fun setupDateButton() {
-        binding.dateText.setOnClickListener {
+        binding.dateLayout.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
@@ -59,7 +59,7 @@ class DateTimeGroup @JvmOverloads constructor(
     }
 
     private fun setupTimeButton() {
-        binding.timeText.setOnClickListener {
+        binding.timeLayout.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)

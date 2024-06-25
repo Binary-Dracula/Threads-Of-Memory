@@ -1,16 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.ThreadsOfMemory" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <!-- 主要主题颜色 -->
+        <item name="colorPrimary">@color/colorPrimary</item> <!-- 主要颜色 -->
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item> <!-- 主要颜色的变体 -->
+        <item name="colorAccent">@color/colorAccent</item> <!-- 强调颜色（次要颜色） -->
+
+        <!-- 状态栏颜色 -->
+        <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
+        <!-- 导航栏颜色 -->
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+
+        <!-- 自定义其他主题属性 -->
+        <item name="android:windowBackground">@color/colorBackground</item> <!-- 窗口背景颜色 -->
+        <item name="colorOnPrimary">@color/colorOnPrimary</item> <!-- 主要颜色上的文字颜色 -->
+        <item name="colorOnSecondary">@color/colorOnSecondary</item> <!-- 次要颜色上的文字颜色 -->
+        <item name="colorOnBackground">@color/colorOnBackground</item> <!-- 背景颜色上的文字颜色 -->
+        <item name="colorOnSurface">@color/colorOnSurface</item> <!-- 界面表面颜色上的文字颜色 -->
+        <item name="colorOnError">@color/colorOnError</item> <!-- 错误颜色上的文字颜色 -->
     </style>
 </resources>

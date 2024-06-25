@@ -21,8 +21,8 @@ class ViewOptionGroup<T : ViewOptionGroup.IOption> @JvmOverloads constructor(
         this,
         true
     )
-    private var unselectedColor = context.getColor(R.color.white)
-    private var selectedColor = context.getColor(R.color.purple_200)
+    private var unselectedColor = context.getColor(R.color.colorSurface)
+    private var selectedColor = context.getColor(R.color.colorPrimary)
     private val adapter = OptionGroupAdapter<T>()
 
     init {
@@ -44,6 +44,10 @@ class ViewOptionGroup<T : ViewOptionGroup.IOption> @JvmOverloads constructor(
         listener.invoke(optionList[0])
     }
 
+    fun selected(position: Int) {
+        adapter.selected(position)
+    }
+
     private inner class OptionGroupAdapter<T : IOption> :
         RecyclerView.Adapter<OptionGroupAdapter<T>.ViewHolder>() {
 
@@ -59,6 +63,11 @@ class ViewOptionGroup<T : ViewOptionGroup.IOption> @JvmOverloads constructor(
         fun setOptionList(optionList: List<T>) {
             this.optionList.clear()
             this.optionList.addAll(optionList)
+            notifyItemRangeChanged(0, optionList.size)
+        }
+
+        fun selected(position: Int) {
+            selectedPosition = position
             notifyItemRangeChanged(0, optionList.size)
         }
 

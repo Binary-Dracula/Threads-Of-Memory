@@ -6,12 +6,23 @@
 
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/task_list"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".module.task.TaskListFragment">
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <com.binary.memory.widgets.DraculaToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/task_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".module.task.TaskListFragment">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
 </layout>

@@ -6,9 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.binary.memory.R
 import com.binary.memory.base.DraculaViewModel
-import com.binary.memory.entity.DifficultyLevel
+import com.binary.memory.constants.EnumDifficulty
 import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import com.binary.memory.repository.FlashcardRepository
@@ -29,7 +28,7 @@ class FlashcardViewModel(
     val insertFlashcardSuccess = MutableLiveData<Boolean>()
 
     // Difficulty Level
-    val difficultyLevel = mutableListOf<DifficultyLevel>()
+    val difficultyLevel = mutableListOf<EnumDifficulty>()
 
     private val _currentFlashcard = MutableLiveData<Flashcard?>()
     val currentFlashcard: LiveData<Flashcard?> = _currentFlashcard
@@ -37,10 +36,7 @@ class FlashcardViewModel(
     private var flashcards: List<Flashcard> = emptyList()
 
     init {
-        application.resources.getStringArray(R.array.difficulty_level)
-            .forEachIndexed { index, string ->
-                difficultyLevel.add(DifficultyLevel(index, string))
-            }
+        difficultyLevel.addAll(EnumDifficulty.entries.toTypedArray())
     }
 
     fun insertFlashGroup(flashGroupName: String) {
@@ -62,7 +58,7 @@ class FlashcardViewModel(
                     back = answer,
                     createdTime = DateUtils.getCurrentTimestamp(),
                     flashGroupId = flashGroupId,
-                    difficultyLevel = difficultyLevel.find { it.level == 0 }?.level ?: 0
+                    difficulty = EnumDifficulty.EASY.name
                 )
             )
             insertFlashcardSuccess.value = true
@@ -108,9 +104,9 @@ class FlashcardViewModel(
         }
     }
 
-    fun setCurrentDifficultyLevel(difficultyLevel: DifficultyLevel) {
+    fun setCurrentDifficultyLevel(difficultyLevel: EnumDifficulty) {
         _currentFlashcard.value?.let {
-            it.difficultyLevel = difficultyLevel.level
+            it.difficulty = difficultyLevel.name
             updateFlashcard(it)
         }
     }

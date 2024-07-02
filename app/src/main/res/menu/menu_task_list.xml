@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/sort"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menu_sort_task_by_create_date"
+                android:title="@string/create_date"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/menu_sort_task_by_remind_time"
+                android:title="@string/remind_time"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/menu_sort_task_by_priority"
+                android:title="@string/priority"
+                app:showAsAction="ifRoom" />
+
+        </menu>
+    </item>
+
+
+</menu>

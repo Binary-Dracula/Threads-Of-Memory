@@ -7,6 +7,10 @@
         <variable
             name="task"
             type="com.binary.memory.model.Task" />
+
+        <variable
+            name="taskViewModel"
+            type="com.binary.memory.viewmodel.TaskViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
-            android:text="@{task.priorityString}"
+            android:text="@{taskViewModel.getPriority(task.priority)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/priority_title" />
 
@@ -79,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="32dp"
-            android:text="@{task.time}"
+            android:text="@{taskViewModel.getTimeStringByMillis(task.remindTime)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/next_remind_title" />
 
@@ -88,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="@{task.date}"
+            android:text="@{taskViewModel.getRemindDateByTimestamp(task.remindDate)}"
             app:layout_constraintEnd_toStartOf="@+id/time"
             app:layout_constraintTop_toTopOf="@+id/time" />
 
@@ -118,7 +122,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="@string/Complete"
+            android:text="@string/complete"
             app:layout_constraintBottom_toTopOf="@id/delete_task"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

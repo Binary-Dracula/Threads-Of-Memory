@@ -10,7 +10,7 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.binary.memory.R
 import com.binary.memory.databinding.DateTimeGroupBinding
-import java.util.Locale
+import com.binary.memory.utils.DateUtils
 
 class DateTimeGroup @JvmOverloads constructor(
     context: Context,
@@ -25,8 +25,8 @@ class DateTimeGroup @JvmOverloads constructor(
         true
     )
 
-    var onDateSelectedListener: ((date: String) -> Unit)? = null
-    var onTimeSelectedListener: ((time: String) -> Unit)? = null
+    var onDateSelectedListener: ((date: Long) -> Unit)? = null
+    var onTimeSelectedListener: ((time: Long) -> Unit)? = null
 
     init {
 
@@ -44,13 +44,18 @@ class DateTimeGroup @JvmOverloads constructor(
             val datePickerDialog = DatePickerDialog(
                 context,
                 { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                    val monthStr =
-                        String.format(Locale.getDefault(), "%02d", selectedMonth + 1)
-                    val dayOfMonthStr =
-                        String.format(Locale.getDefault(), "%02d", selectedDayOfMonth)
-                    val selectedDate = "$selectedYear-$monthStr-$dayOfMonthStr"
-                    binding.dateText.text = selectedDate
-                    onDateSelectedListener?.invoke(selectedDate)
+                    binding.dateText.text = DateUtils.getDateStringByDate(
+                        selectedYear,
+                        selectedMonth,
+                        selectedDayOfMonth
+                    )
+                    onDateSelectedListener?.invoke(
+                        DateUtils.getTimestampByDate(
+                            selectedYear,
+                            selectedMonth,
+                            selectedDayOfMonth
+                        )
+                    )
                 },
                 year, month, dayOfMonth
             )
@@ -67,11 +72,14 @@ class DateTimeGroup @JvmOverloads constructor(
             val timePickerDialog = TimePickerDialog(
                 context,
                 { _, selectedHour, selectedMinute ->
-                    val hourStr = String.format(Locale.getDefault(), "%02d", selectedHour)
-                    val minuteStr = String.format(Locale.getDefault(), "%02d", selectedMinute)
-                    val selectedTime = "$hourStr:$minuteStr"
-                    binding.timeText.text = selectedTime
-                    onTimeSelectedListener?.invoke(selectedTime)
+                    binding.timeText.text =
+                        DateUtils.getTimeStringByTime(selectedHour, selectedMinute)
+                    onTimeSelectedListener?.invoke(
+                        DateUtils.getMillisByTime(
+                            selectedHour,
+                            selectedMinute
+                        )
+                    )
                 },
                 hour, minute, true
             )

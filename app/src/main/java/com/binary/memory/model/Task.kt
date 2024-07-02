@@ -18,15 +18,15 @@ data class Task(
     // 任务描述
     var description: String = "",
     // 创建日期
-    var createDate: String = "",
+    var createTimestamp: Long = 0,
     // 提醒日期
-    var date: String = "",
+    var remindDate: Long = 0,
     // 提醒时间
-    var time: String = "",
-    // 优先级
-    var priority: Int = 0,
+    var remindTime: Long = 0,
     // 优先级字符串
-    var priorityString: String = "",
+    var priority: String = "",
+    // 优先级index
+    var priorityIndex: Int = 0,
     // 是否完成
     var isDone: Boolean = false
 ) : Parcelable

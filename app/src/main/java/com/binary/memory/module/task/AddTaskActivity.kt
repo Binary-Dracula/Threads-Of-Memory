@@ -7,8 +7,8 @@ import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.base.DraculaApplication
 import com.binary.memory.constants.Constants
+import com.binary.memory.constants.EnumPriority
 import com.binary.memory.databinding.ActivityAddTaskBinding
-import com.binary.memory.entity.Priority
 import com.binary.memory.viewmodel.TaskViewModel
 import com.binary.memory.viewmodel.TaskViewModelFactory
 import com.vmadalin.easypermissions.EasyPermissions
@@ -29,7 +29,7 @@ class AddTaskActivity : DraculaActivity<ActivityAddTaskBinding>() {
         addClickListener(viewBinding.addTask)
 
         viewBinding.priorityGroup.init(viewModel.priorityList) { priority ->
-            viewModel.setPriority(priority as Priority)
+            viewModel.setPriority(priority as EnumPriority)
         }
 
         viewBinding.dateTimeGroup.onDateSelectedListener = { date ->

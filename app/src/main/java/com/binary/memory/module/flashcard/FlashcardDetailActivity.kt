@@ -11,8 +11,8 @@ import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.base.DraculaApplication
 import com.binary.memory.constants.Constants
+import com.binary.memory.constants.EnumDifficulty
 import com.binary.memory.databinding.ActivityFlashcardDetailBinding
-import com.binary.memory.entity.DifficultyLevel
 import com.binary.memory.model.Flashcard
 import com.binary.memory.viewmodel.FlashcardViewModel
 import com.binary.memory.viewmodel.FlashcardViewModelFactory
@@ -82,7 +82,7 @@ class FlashcardDetailActivity : DraculaActivity<ActivityFlashcardDetailBinding>(
         viewBinding.flashcard = flashcard
         viewBinding.executePendingBindings()
 
-        viewBinding.viewOptionGroup.selected(flashcard.difficultyLevel)
+        viewBinding.viewOptionGroup.selected(EnumDifficulty.valueOf(flashcard.difficulty).getOptionIndex())
     }
 
     override fun onClick(v: View?) {
@@ -102,7 +102,7 @@ class FlashcardDetailActivity : DraculaActivity<ActivityFlashcardDetailBinding>(
         }
     }
 
-    private fun onDifficultyLevelChanged(difficultyLevel: DifficultyLevel) {
+    private fun onDifficultyLevelChanged(difficultyLevel: EnumDifficulty) {
         viewModel.setCurrentDifficultyLevel(difficultyLevel)
     }
 }

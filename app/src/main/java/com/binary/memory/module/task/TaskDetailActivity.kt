@@ -8,12 +8,16 @@ import androidx.activity.viewModels
 import com.binary.memory.R
 import com.binary.memory.base.DraculaActivity
 import com.binary.memory.base.DraculaApplication
+import com.binary.memory.constants.EnumDifficulty
 import com.binary.memory.databinding.ActivityTaskDetailBinding
-import com.binary.memory.entity.DifficultyLevel
 import com.binary.memory.viewmodel.TaskViewModel
 import com.binary.memory.viewmodel.TaskViewModelFactory
+import com.binary.memory.widgets.ConfirmDialog
 
 class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
+
+    private var deleteTaskConfirmDialog: ConfirmDialog? = null
+    private var completeTaskConfirmDialog: ConfirmDialog? = null
 
     private val viewModel by viewModels<TaskViewModel> {
         TaskViewModelFactory(application, (application as DraculaApplication).taskRepository)
@@ -36,14 +40,13 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
         viewModel.task.observe(this) {
             if (it == null) return@observe
             viewBinding.task = it
+            viewBinding.taskViewModel = viewModel
         }
         viewModel.complete.observe(this) {
             if (it) finish()
         }
         viewModel.done.observe(this) {
-            if (it) {
-                finish()
-            }
+            if (it) finish()
         }
     }
 
@@ -59,17 +62,39 @@ class TaskDetailActivity : DraculaActivity<ActivityTaskDetailBinding>() {
         super.onClick(v)
         when (v?.id) {
             R.id.complete -> {
-                viewModel.completeTask()
+                completeTaskConfirmDialog = ConfirmDialog.create(
+                    this,
+                    R.string.warning,
+                    R.string.complete_task,
+                    positiveCallback = {
+                        viewModel.completeTask()
+                    },
+                    negativeCallback = {}
+                )
             }
 
             R.id.delete_task -> {
-                viewModel.deleteTask()
+                deleteTaskConfirmDialog = ConfirmDialog.create(
+                    this,
+                    R.string.warning,
+                    R.string.delete_task,
+                    positiveCallback = {
+                        viewModel.deleteTask()
+                    },
+                    negativeCallback = {}
+                )
             }
         }
     }
 
-    private fun onDifficultyLevelSelected(difficultyLevel: DifficultyLevel) {
+    private fun onDifficultyLevelSelected(difficultyLevel: EnumDifficulty) {
         viewModel.setDifficultyLevel(difficultyLevel)
+    }
+
+    override fun onDestroy() {
+        completeTaskConfirmDialog?.dismiss()
+        deleteTaskConfirmDialog?.dismiss()
+        super.onDestroy()
     }
 
     companion object {

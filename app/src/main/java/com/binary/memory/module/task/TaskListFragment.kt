@@ -1,16 +1,15 @@
 package com.binary.memory.module.task
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binary.memory.R
 import com.binary.memory.base.DraculaApplication
 import com.binary.memory.base.DraculaFragment
+import com.binary.memory.constants.EnumTaskSort
 import com.binary.memory.databinding.FragmentTaskListBinding
 import com.binary.memory.module.task.adapter.TaskListAdapter
 import com.binary.memory.viewmodel.TaskViewModel
 import com.binary.memory.viewmodel.TaskViewModelFactory
-import kotlinx.coroutines.launch
 
 class TaskListFragment private constructor() : DraculaFragment<FragmentTaskListBinding>() {
 
@@ -28,6 +27,26 @@ class TaskListFragment private constructor() : DraculaFragment<FragmentTaskListB
     }
 
     override fun initView() {
+        viewBinding.toolbar.apply {
+            setTitle(R.string.task_list)
+            setMenu(R.menu.menu_task_list)
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem) {
+                    R.id.menu_sort_task_by_create_date -> {
+                        viewModel.getTaskListBySort(EnumTaskSort.CREATE_DATE)
+                    }
+
+                    R.id.menu_sort_task_by_remind_time -> {
+                        viewModel.getTaskListBySort(EnumTaskSort.REMIND_TIME)
+                    }
+
+                    R.id.menu_sort_task_by_priority -> {
+                        viewModel.getTaskListBySort(EnumTaskSort.PRIORITY)
+                    }
+                }
+                true
+            }
+        }
         viewBinding.taskList.layoutManager = LinearLayoutManager(requireContext())
         viewBinding.taskList.adapter = adapter
         adapter.onItemClickListener = { task ->
@@ -37,19 +56,22 @@ class TaskListFragment private constructor() : DraculaFragment<FragmentTaskListB
     }
 
     override fun initObserver() {
-        lifecycleScope.launch {
-            viewModel.getTaskList().collect {
-                adapter.setItems(
-                    it,
-                    areItemsTheSame = { oldTask, newTask ->
-                        oldTask.id == newTask.id
-                    },
-                    areContentsTheSame = { oldTask, newTask ->
-                        oldTask.title == newTask.title && oldTask.description == newTask.description
-                    }
-                )
-            }
+        viewModel.taskList.observe(viewLifecycleOwner) {
+            adapter.setItems(
+                it,
+                areItemsTheSame = { oldTask, newTask ->
+                    oldTask.id == newTask.id
+                },
+                areContentsTheSame = { oldTask, newTask ->
+                    oldTask.title == newTask.title && oldTask.description == newTask.description
+                }
+            )
         }
+    }
+
+    override fun initData() {
+        super.initData()
+        viewModel.getTaskListBySort(EnumTaskSort.CREATE_DATE)
     }
 
     companion object {

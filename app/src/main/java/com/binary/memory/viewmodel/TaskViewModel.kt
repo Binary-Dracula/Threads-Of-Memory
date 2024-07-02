@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.binary.memory.R
 import com.binary.memory.base.DraculaViewModel
-import com.binary.memory.entity.DifficultyLevel
-import com.binary.memory.entity.Priority
+import com.binary.memory.constants.EnumDifficulty
+import com.binary.memory.constants.EnumPriority
+import com.binary.memory.constants.EnumTaskSort
 import com.binary.memory.model.Task
 import com.binary.memory.repository.TaskRepository
 import com.binary.memory.utils.AlarmUtils
@@ -26,17 +26,17 @@ class TaskViewModel(
     private val _task = MutableLiveData<Task>()
     val task: LiveData<Task?> = _task
 
-    fun getTaskList() = repository.getAllTasks()
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    private val _taskList = MutableLiveData<List<Task>>()
+    val taskList: LiveData<List<Task>> = _taskList
 
-    val priorityList: ArrayList<Priority> = ArrayList()
-    private var priority: Priority? = null
+    val priorityList: ArrayList<EnumPriority> = ArrayList()
+    private var priority: EnumPriority = EnumPriority.LOW
 
-    val difficultyLevelList: ArrayList<DifficultyLevel> = ArrayList()
-    private var difficultyLevel: DifficultyLevel? = null
+    val difficultyLevelList: ArrayList<EnumDifficulty> = ArrayList()
+    private var difficultyLevel: EnumDifficulty = EnumDifficulty.EASY
 
-    private var notifyDate = ""
-    private var notifyTime = ""
+    private var notifyDate: Long = 0
+    private var notifyTime: Long = 0
 
     val done = MutableLiveData<Boolean>()
     val complete = MutableLiveData<Boolean>()
@@ -44,27 +44,46 @@ class TaskViewModel(
     private val alarmUtils = AlarmUtils()
 
     init {
-        application.resources.getStringArray(R.array.priority).forEachIndexed { index, s ->
-            priorityList.add(Priority(index, s))
-        }
-        application.resources.getStringArray(R.array.difficulty_level).forEachIndexed { index, s ->
-            difficultyLevelList.add(DifficultyLevel(index, s))
+        priorityList.add(EnumPriority.LOW)
+        priorityList.add(EnumPriority.MEDIUM)
+        priorityList.add(EnumPriority.HIGH)
+
+        difficultyLevelList.addAll(EnumDifficulty.entries.toTypedArray())
+    }
+
+    fun getTaskListBySort(sort: EnumTaskSort = EnumTaskSort.CREATE_DATE) {
+        viewModelScope.launch {
+            repository.getAllTasks()
+                .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+                .collect {
+                    if (it.isNotEmpty()) {
+                        _taskList.value = when (sort) {
+                            EnumTaskSort.CREATE_DATE -> it.sortedBy { task -> task.createTimestamp }
+                            EnumTaskSort.REMIND_TIME -> it.sortedBy { task -> task.remindDate }
+                            EnumTaskSort.PRIORITY -> it.sortedByDescending { task -> task.priorityIndex }
+                        }
+                    }
+                }
         }
     }
 
-    fun setPriority(priority: Priority) {
+    fun getPriority(name: String): String {
+        return EnumPriority.valueOf(name).getOptionString(getApplication())
+    }
+
+    fun setPriority(priority: EnumPriority) {
         this.priority = priority
     }
 
-    fun setDifficultyLevel(difficultyLevel: DifficultyLevel) {
+    fun setDifficultyLevel(difficultyLevel: EnumDifficulty) {
         this.difficultyLevel = difficultyLevel
     }
 
-    fun setNotifyDate(date: String) {
+    fun setNotifyDate(date: Long) {
         notifyDate = date
     }
 
-    fun setNotifyTime(time: String) {
+    fun setNotifyTime(time: Long) {
         notifyTime = time
     }
 
@@ -75,25 +94,25 @@ class TaskViewModel(
         if (content.isNullOrEmpty()) {
             return
         }
-        if (notifyDate.isEmpty()) {
+        if (notifyDate == 0L) {
             return
         }
-        if (notifyTime.isEmpty()) {
+        if (notifyTime == 0L) {
             return
         }
 
         val task = Task(
             title = title,
             description = content,
-            createDate = DateUtils.getTodayDate(),
-            date = notifyDate,
-            time = notifyTime,
-            priority = priority?.getOptionIndex() ?: 0,
-            priorityString = priority?.getOptionString() ?: "",
+            createTimestamp = DateUtils.getCurrentTimestamp(),
+            remindDate = notifyDate,
+            remindTime = notifyTime,
+            priority = priority.name,
+            priorityIndex = priority.getOptionIndex(),
             isDone = false,
         )
 
-        alarmUtils.setAlarm(DateUtils.getTriggerTimeMillis(notifyDate, notifyTime), task)
+        alarmUtils.setAlarm(notifyDate + notifyTime, task)
 
         viewModelScope.launch {
             repository.insertTask(task)
@@ -107,14 +126,14 @@ class TaskViewModel(
                 // 计算提醒时间并更新
                 val nextDate = DateUtils.getNextRemindDateByDifficultyLevel(difficultyLevel)
                 val nextTime = DateUtils.get20ClockMillis()
-                var triggerTime = nextDate + nextTime
+                val triggerTime = nextDate + nextTime
 
                 // for test
 //                triggerTime = DateUtils.getTimestampAfter5Minutes()
 
                 // 更新任务数据
-                _task.value!!.date = DateUtils.dateTimestampToString(triggerTime)
-                _task.value!!.time = DateUtils.timeTimestampToString(triggerTime)
+                _task.value?.remindDate = nextDate
+                _task.value?.remindTime = nextTime
                 // 设定提醒
                 alarmUtils.setAlarm(triggerTime, _task.value!!)
                 // 更新表
@@ -151,6 +170,14 @@ class TaskViewModel(
                 _task.value = it
             }
         }
+    }
+
+    fun getRemindDateByTimestamp(timestamp: Long): String {
+        return DateUtils.getDateByTimestamp(timestamp)
+    }
+
+    fun getTimeStringByMillis(millis: Long): String {
+        return DateUtils.getTimeStringByMillis(millis)
     }
 
 }

@@ -31,6 +31,12 @@ interface TaskDao {
     @Query("SELECT * FROM task_table")
     fun getAllTasks(): Flow<List<Task>>
 
-    @Query("SELECT * FROM task_table WHERE date = :date")
-    fun getTasksByDate(date: String): Flow<List<Task>>
+    @Query("SELECT * FROM task_table ORDER BY createTimestamp ASC")
+    fun getAllTasksByCreateTimestamp(): Flow<List<Task>>
+
+    @Query("SELECT * FROM task_table ORDER BY remindDate ASC, remindTime ASC")
+    fun getAllTasksByRemind(): Flow<List<Task>>
+
+    @Query("SELECT * FROM task_table ORDER BY priorityIndex DESC")
+    fun getAllTasksByPriority():Flow<List<Task>>
 }

@@ -97,7 +97,7 @@ class ViewOptionGroup<T : ViewOptionGroup.IOption> @JvmOverloads constructor(
                 } else {
                     binding.root.setBackgroundColor(unselectedColor)
                 }
-                binding.level.text = option.getOptionString()
+                binding.level.text = option.getOptionString(context)
                 binding.root.setOnClickListener {
                     selectedPosition = position
                     notifyItemRangeChanged(0, optionList.size)
@@ -108,7 +108,8 @@ class ViewOptionGroup<T : ViewOptionGroup.IOption> @JvmOverloads constructor(
     }
 
     interface IOption {
-        fun getOptionString(): String
+        fun getOptionString(context: Context): String
         fun getOptionIndex(): Int
+        fun getColor(context: Context): Int
     }
 }

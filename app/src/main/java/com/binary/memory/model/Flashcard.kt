@@ -21,6 +21,6 @@ data class Flashcard(
     // 所属闪卡组
     var flashGroupId: Int,
     // 难度
-    var difficultyLevel: Int,
+    var difficulty: String,
 ) : Parcelable
 

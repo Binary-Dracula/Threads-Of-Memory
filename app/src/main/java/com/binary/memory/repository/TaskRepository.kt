@@ -31,7 +31,4 @@ class TaskRepository(private val taskDao: TaskDao) : DraculaRepository {
         return taskDao.getAllTasks()
     }
 
-    fun getTasksByDate(date: String): Flow<List<Task>> {
-        return taskDao.getTasksByDate(date)
-    }
 }

@@ -13,6 +13,6 @@
             android:layout_height="?attr/listPreferredItemHeight"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_priority" />
+            tools:listitem="@layout/list_item_option" />
     </FrameLayout>
 </layout>

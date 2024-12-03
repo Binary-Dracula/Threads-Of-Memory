@@ -9,7 +9,6 @@ import com.binary.memory.base.DraculaFragment
 import com.binary.memory.databinding.FragmentFlashcardListBinding
 import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
-import com.binary.memory.module.flashcard.adapter.FlashcardListAdapter
 import com.binary.memory.viewmodel.FlashcardViewModel
 import com.binary.memory.viewmodel.FlashcardViewModelFactory
 import kotlinx.coroutines.launch

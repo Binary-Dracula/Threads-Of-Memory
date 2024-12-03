@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.binary.memory.base.DraculaViewModel
 import com.binary.memory.constants.EnumDifficulty
+import com.binary.memory.constants.EnumFlashcardType
 import com.binary.memory.model.FlashGroup
 import com.binary.memory.model.Flashcard
 import com.binary.memory.repository.FlashcardRepository
@@ -58,7 +59,8 @@ class FlashcardViewModel(
                     back = answer,
                     createdTime = DateUtils.getCurrentTimestamp(),
                     flashGroupId = flashGroupId,
-                    difficulty = EnumDifficulty.EASY.name
+                    difficulty = EnumDifficulty.EASY.name,
+                    type = EnumFlashcardType.NORMAL.name
                 )
             )
             insertFlashcardSuccess.value = true

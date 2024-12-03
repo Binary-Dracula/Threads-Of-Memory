@@ -1,6 +1,9 @@
-package com.binary.memory.module.flashcard
+package com.binary.memory.module.flashcard.group
 
+import android.content.Intent
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.binary.memory.R
@@ -8,13 +11,19 @@ import com.binary.memory.base.DraculaApplication
 import com.binary.memory.base.DraculaFragment
 import com.binary.memory.databinding.FragmentFlashGroupListBinding
 import com.binary.memory.model.FlashGroup
-import com.binary.memory.module.flashcard.adapter.FlashGroupListAdapter
+import com.binary.memory.module.flashcard.FlashcardListActivity
 import com.binary.memory.viewmodel.FlashcardViewModel
 import com.binary.memory.viewmodel.FlashcardViewModelFactory
 import kotlinx.coroutines.launch
 
-class FlashGroupListFragment private constructor(): DraculaFragment<FragmentFlashGroupListBinding>(),
-    View.OnClickListener {
+class FlashGroupListFragment private constructor() :
+    DraculaFragment<FragmentFlashGroupListBinding>() {
+
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+        }
 
     private val viewModel by viewModels<FlashcardViewModel> {
         FlashcardViewModelFactory(
@@ -32,7 +41,6 @@ class FlashGroupListFragment private constructor(): DraculaFragment<FragmentFlas
 
     override fun initView() {
         viewBinding.flashGroupList.adapter = adapter
-        viewBinding.addFlashGroup.setOnClickListener(this)
         adapter.onItemClickListener = ::flashGroupItemClickListener
     }
 
@@ -52,15 +60,7 @@ class FlashGroupListFragment private constructor(): DraculaFragment<FragmentFlas
             }
         }
         viewModel.insertFlashGroupSuccess.observe(this) {
-            viewBinding.flashGroupName.editText?.text = null
-        }
-    }
 
-    override fun onClick(v: View?) {
-        when (v) {
-            viewBinding.addFlashGroup -> {
-                viewModel.insertFlashGroup(viewBinding.flashGroupName.editText?.text.toString())
-            }
         }
     }
 

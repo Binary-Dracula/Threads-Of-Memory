@@ -38,7 +38,8 @@
 
     <!--  flash card start  -->
     <string name="flashcard">闪卡</string>
-    <string name="add_flash_group_hint">闪卡组标题</string>
+    <string name="add_flash_group_title_hint">闪卡组标题</string>
+    <string name="add_flash_group_description_hint">闪卡内容</string>
     <string name="flash_group_list">闪卡组列表</string>
     <string name="question">问题</string>
     <string name="answer">答案</string>

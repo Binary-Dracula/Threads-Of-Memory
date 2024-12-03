@@ -23,6 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ThreadsOfMemory"
         tools:targetApi="31">
+        <activity
+            android:name=".module.flashcard.group.AddFlashGroupActivity"
+            android:exported="false" />
+
         <receiver android:name=".broadcast.AlarmReceiver" />
 
         <activity
@@ -53,15 +57,6 @@
         <activity
             android:name=".module.flashcard.FlashcardDetailActivity"
             android:exported="false" />
-        <!--        <activity-->
-        <!--            android:name=".module.LauncherActivity"-->
-        <!--            android:exported="true">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
     </application>
 
 </manifest>

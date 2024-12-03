@@ -1,4 +1,4 @@
-package com.binary.memory.module.flashcard.adapter
+package com.binary.memory.module.flashcard
 
 import com.binary.memory.R
 import com.binary.memory.base.DraculaAdapter
